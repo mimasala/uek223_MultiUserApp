@@ -13,7 +13,7 @@ const UserService = {
 
   addUser: (user: User) => {
     return api.post('/user/registerUser', user).then((res) => {
-      return res.data;
+      return res;
     });
   },
 

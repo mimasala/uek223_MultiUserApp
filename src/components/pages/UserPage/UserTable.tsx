@@ -2,10 +2,11 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
 import { User } from '../../../types/models/User.model';
 import UserService from '../../../Services/UserService';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 
 const UserTable = () => {
   const navigate = useNavigate();
