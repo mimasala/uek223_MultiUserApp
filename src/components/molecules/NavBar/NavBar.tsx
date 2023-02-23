@@ -2,11 +2,19 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Too
 import MenuIcon from '@mui/icons-material/Menu';
 import React from "react";
 import InterestsIcon from '@mui/icons-material/Interests';
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Home', 'Events', 'About'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+type Page = {
+  pageName: string, path: string}
+
+
+const pages: Page[] = [ {pageName: "Home",  path: "/"}, {pageName: 'Events', path:  "/events"},{pageName: 'About',path: "/"}];
+// if time basic profile page
+const settings: Page[] = [{pageName:'Profile', path: "/"}, {pageName: 'Own Events', path: "/ownevents"}, {pageName: 'Logout', path: "/login"}];
 
 const NavBar = () => {
+  const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -77,11 +85,6 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
             </Menu>
           </Box>
           <InterestsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -106,11 +109,11 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.pageName}
+                onClick={()=>navigate(page.path)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.pageName}
               </Button>
             ))}
           </Box>
@@ -138,8 +141,8 @@ const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting} onClick={()=>navigate(setting.path)}>
+                  <Typography textAlign="center">{setting.pageName}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -1,15 +1,17 @@
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Button, Container, Grid } from "@mui/material";
 import EventCard from "../../molecules/EventCard/EventCard";
-import { useStyles } from "./Event.style";
+import NewEventCard from "../../molecules/EventCard/NewEventCard";
+import { useStyles } from "./OwnEvent.style";
 
-const EventPage = () => {
+const OwnEventsPage = () => {
     const eventStyles = useStyles();
     return(
         <Container fixed >
         <Box sx={{ bgcolor: '#cfe8fc', height: '90vh', textAlign: 'center',  overflow: 'auto'}} >
-            <h1 >Available Events</h1>
+            <h1>Created Events</h1>
+            <Button variant="outlined">New</Button>
             <Container maxWidth="md" >
-            <Grid container spacing={10} sx={{ bgcolor: '#cfe8fc', marginTop:"10%", marginBottom: "10%"}}>
+            <Grid container spacing={10} sx={{ bgcolor: '#cfe8fc', marginTop:"5%", marginBottom: "10%"}}>
                     <Grid item xs={6}>
                     <EventCard />
                     </Grid>
@@ -26,7 +28,7 @@ const EventPage = () => {
                     <EventCard />
                     </Grid>
                     <Grid item xs={6}>
-                    <EventCard/>
+                    <NewEventCard/>
                     </Grid>
                 </Grid>
             </Container>
@@ -34,4 +36,4 @@ const EventPage = () => {
       </Container>
 );
 };
-export default EventPage;
+export default OwnEventsPage;

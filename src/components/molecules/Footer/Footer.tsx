@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="footer-container">
       <div className="footer-content">
         <div className="footer-logo">
-          <InterestsIcon/>
+          
           <p>© 2023 OurSpace</p>
         </div>
         <div className="footer-links">

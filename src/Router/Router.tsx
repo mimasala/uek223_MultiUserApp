@@ -5,6 +5,8 @@ import HomePage from "../components/pages/HomePage";
 import UserTable from "../components/pages/UserPage/UserTable";
 import UserPage from "../components/pages/UserPage/UserPage";
 import EventPage from "../components/pages/EventPage/EventPage";
+import NotFoundPage from "../components/pages/NotFound/NotFoundPage";
+import OwnEventsPage from "../components/pages/OwnEventsPage/OwnEventsPage";
 
 /**
  * Router component renders a route switch with all available pages
@@ -26,7 +28,11 @@ const Router = () => {
       />
       <Route
         path={"/events"}
-        element={<PrivateRoute authorities={[]} element={<EventPage />} />}
+        element={<EventPage />} 
+      />
+      <Route
+        path={"/ownevents"}
+        element={<OwnEventsPage />} 
       />
       <Route
         path="/useredit"
@@ -41,7 +47,7 @@ const Router = () => {
         }
       />
 
-      <Route path="*" element={<div>Not Found</div>} />
+      <Route path="*" element={<NotFoundPage/>} />
     </Routes>
   );
 };

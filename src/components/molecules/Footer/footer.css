@@ -1,8 +1,10 @@
 .footer-container {
     background-color: #292928;
     color: #fff;
-    padding: 10px;
-    bottom: -50px;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
   
   .footer-content {
@@ -10,12 +12,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  
-  .footer-logo img {
-    height: 40px;
-    margin-right: 10px;
   }
   
   .footer-links a {
