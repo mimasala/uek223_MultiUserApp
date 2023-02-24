@@ -1,11 +1,6 @@
 import api from '../config/Api';
 import { Event } from '../types/models/Event.model';
 
-
-type Config = {
-  page: number, pageLength: number
-}
-
 const EventService = {
 
   getEvent: async (eventID: string): Promise<Event> => {
@@ -14,7 +9,7 @@ const EventService = {
   },
 
   updateEvent: (event: Event) => {
-    return api.put(`/event/${event.id}`, event);
+    return api.put(`/event/${event.eventId}`, event);
   },
 
   addEvent: (event: Event) => {
