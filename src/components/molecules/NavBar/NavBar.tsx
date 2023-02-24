@@ -1,20 +1,18 @@
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import React from "react";
+import React, { useContext } from "react";
 import InterestsIcon from '@mui/icons-material/Interests';
 import { useNavigate } from "react-router-dom";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 
 
 type Page = {
-  pageName: string, path: string}
+  pageName: string, onClick: () => void}
 
-
-const pages: Page[] = [ {pageName: "Home",  path: "/"}, {pageName: 'Events', path:  "/events"},{pageName: 'About',path: "/"}];
-// if time basic profile page
-const settings: Page[] = [{pageName:'Profile', path: "/"}, {pageName: 'Own Events', path: "/ownevents"}, {pageName: 'Logout', path: "/login"}];
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const context = useContext(ActiveUserContext);
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -32,6 +30,10 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const pages: Page[] = [ {pageName: "Home",  onClick: () => {return navigate("/")}}, {pageName: 'Events', onClick: () => {return navigate("/events")}},{pageName: 'About', onClick: () => {return navigate("/")}}];
+// if time basic profile page
+const settings: Page[] = [{pageName:'Profile', onClick: () => {return navigate("/")}}, {pageName: 'Own Events', onClick: () => { return navigate("/ownevents")}}, {pageName: 'Logout', onClick: () => {return context.logout}}];
 
   return (
     <AppBar position="static" sx={{backgroundImage: "linear-gradient(gray, black)"}}>
@@ -110,7 +112,7 @@ const NavBar = () => {
             {pages.map((page) => (
               <Button
                 key={page.pageName}
-                onClick={()=>navigate(page.path)}
+                onClick={page.onClick}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.pageName}
@@ -141,7 +143,7 @@ const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={()=>navigate(setting.path)}>
+                <MenuItem onClick={setting.onClick}>
                   <Typography textAlign="center">{setting.pageName}</Typography>
                 </MenuItem>
               ))}

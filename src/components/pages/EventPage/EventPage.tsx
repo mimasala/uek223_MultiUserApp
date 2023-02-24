@@ -1,9 +1,35 @@
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Pagination, Stack, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
+import EventService from "../../../Services/EventService";
 import EventCard from "../../molecules/EventCard/EventCard";
-import { useStyles } from "./Event.style";
 
+type Config = {
+    page: number, pageLength: number
+  }
 const EventPage = () => {
-    const eventStyles = useStyles();
+    let config: Config;
+    const [page, setPage] = React.useState(1);
+    const context = useContext(ActiveUserContext);
+    const [events, setEvents] = useState();
+
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        EventService.getRecommendationsForUser(context.user!.id, value, 6).then((res) => {
+            setEvents(res);
+          });
+        setPage(value)
+      };
+
+    useEffect(() => {
+        return () => {
+            EventService.getRecommendationsForUser(context.user!.id, 1, 6).then((res) => {
+              setEvents(res);
+              console.log(res);
+            });
+            setPage(1);
+        };
+      });
+
     return(
         <Container fixed >
         <Box sx={{ bgcolor: '#cfe8fc', height: '90vh', textAlign: 'center',  overflow: 'auto'}} >
@@ -29,6 +55,9 @@ const EventPage = () => {
                     <EventCard/>
                     </Grid>
                 </Grid>
+                <Stack spacing={2}>
+                    <Pagination count={10} page={page} onChange={handleChange} />
+                </Stack>
             </Container>
         </Box>
       </Container>

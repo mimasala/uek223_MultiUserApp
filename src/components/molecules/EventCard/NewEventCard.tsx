@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 const NewEventCard = () => {
