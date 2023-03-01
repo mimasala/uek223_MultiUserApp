@@ -2,7 +2,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 import { EventRow } from '../../../types/models/EventRow.model'
 import EventService from '../../../Services/EventService'
-import { Event } from '../../../types/models/Event.model'
+import { EventModel } from '../../../types/models/Event.model'
 import { Box, Button } from '@mui/material'
 
 const EventsManagePage = () => {
@@ -13,7 +13,7 @@ const EventsManagePage = () => {
     }, [])
     const createEventRows = () =>{
         EventService.getAllEvents().then(data =>{
-            setRows(data.data.map((event:Event) =>{
+            setRows(data.data.map((event:EventModel) =>{
                 // const deleteEvent = {
                 //     deleteEvent: (id:string) => {
                 //         EventService.deleteEvent(id)
@@ -26,9 +26,9 @@ const EventsManagePage = () => {
                     participantsLimit: event.participantsLimit,
                     startDate:event.startDate,
                     endDate:event.endDate,
-                    location:event.place,
+                    location:event.location,
                     description:event.description,
-                    owner:event.eventOwner.firstName + " " + event.eventOwner.lastName,
+                    owner:event.eventOwner?.firstName + " " + event.eventOwner?.lastName,
                     // deleteEvent: deleteEvent
                 }
             }))

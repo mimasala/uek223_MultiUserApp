@@ -1,3 +1,4 @@
+import { Pagination, Stack } from '@mui/material';
 import { Box, flexbox } from '@mui/system';
 import logo from '../../logo1.png';
 
@@ -17,5 +18,6 @@ export default function HomePage() {
         alt='logo'
       />
     </Box>
+    
   );
 }

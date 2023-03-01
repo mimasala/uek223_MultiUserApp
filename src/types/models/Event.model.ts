@@ -1,14 +1,15 @@
+import { Moment } from "moment";
 import { User } from "./User.model";
 
-
-export type Event = {
+export type EventModel = {
   id: string;
   eventName: string;
-  startDate: Date;
-  endDate: Date;
-  place: string;
-  participants: User[];
-  participantsLimit:number;
-  description:string;
-  eventOwner:User
+  numberOfCurrentParticipants: number;
+  participantsLimit: number;
+  startDate: Moment;
+  endDate: Moment;
+  location: string;
+  description: string;
+  eventOwner?: User;
+  imageUrl: string;
 };
