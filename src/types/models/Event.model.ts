@@ -10,6 +10,6 @@ export type EventModel = {
   endDate: Moment;
   location: string;
   description: string;
-  eventOwner?: User;
+  eventOwner?: User ;
   imageUrl: string;
 };
