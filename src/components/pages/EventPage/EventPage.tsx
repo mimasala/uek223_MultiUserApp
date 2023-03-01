@@ -35,7 +35,7 @@ const EventPage = () => {
             <Container maxWidth="md" >
               <Grid container spacing={10} sx={{ bgcolor: '#cfe8fc', marginTop:"10%", marginBottom: "20%"}}>
                 {events.map((event: EventRecommendation) => {
-                    return(                   
+                    return(
                       <Grid item xs={6}>
                       <EventCard {...event}/>
                       </Grid>

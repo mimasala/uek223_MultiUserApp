@@ -8,13 +8,16 @@ import UserForm from '../../molecules/UserForm/UserForm';
 
 const ProfilePage = () => {
   const context = useContext(ActiveUserContext)
-  const user = context.user
+  const user:User = context.user!
   const [editing, setEditing] = useState<boolean>(false)
   const navigate = useNavigate();
   const handleSubmit = (e:any) =>{
     UserService.updateUser(e)
     setEditing(false)
     navigate("/profile")
+  }
+  if (!context.user){
+    navigate("/login")
   }
   const handleEdit = () =>{
     setEditing(!editing)
