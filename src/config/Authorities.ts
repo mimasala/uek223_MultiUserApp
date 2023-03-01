@@ -3,6 +3,7 @@ enum authorities {
   DEFAULT = "DEFAULT",
   USER_MODIFY = "USER_MODIFY",
   ADMIN_READ = "ADMIN_READ",
+  ADMIN_MODIFY = "ADMIN_MODIFY",
 }
 /*
   add your authorities here. E.g:
