@@ -3,8 +3,12 @@ import { User } from "./User.model";
 
 export type Event = {
   id: string;
-  name: string;
-  date: Date;
+  eventName: string;
+  startDate: Date;
+  endDate: Date;
   place: string;
   participants: User[];
+  participantsLimit:number;
+  description:string;
+  eventOwner:User
 };
