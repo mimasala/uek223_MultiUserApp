@@ -16,7 +16,7 @@ const AuthorityService = {
   },
   hasAuthority: (authority: Authority) => {
     AuthorityService.initAuthoritySet();
-    return authoritySet.has(authority);
+    return authoritySet.has(authority.name);
   },
   hasAuthorities: (authorities: Authority[]) => {
     AuthorityService.initAuthoritySet();

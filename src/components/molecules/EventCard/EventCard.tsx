@@ -1,16 +1,19 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Dialog, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardMedia, Dialog, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { Event } from "../../../types/models/Event.model";
+import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
 
-const EventCard = (props: Event) => {
-  const [open, setOpen] = useState(false);
+const EventCard = (props: EventRecommendation) => {
+  const [openLearnMoreDialog, setOpenLearnMoreDialog] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+// check if user is owner and disable participation btn 
+  const handleClickOpenLearnMore = () => {
+    setOpenLearnMoreDialog(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+
+  const handleCloseLearnMore = () => {
+    setOpenLearnMoreDialog(false);
   };
+
   return (
     <>
     <Card sx={{ maxWidth: 345 }}>
@@ -26,15 +29,14 @@ const EventCard = (props: Event) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleClickOpen}>Learn More</Button>
+        <Button size="small" onClick={handleClickOpenLearnMore}>Learn more</Button>
       </CardActions>
     </Card>
-
     <div>
       <Dialog
-        open={open}
+        open={openLearnMoreDialog}
         keepMounted
-        onClose={handleClose}
+        onClose={handleCloseLearnMore}
         aria-describedby="alert-dialog-slide-description"
       >
         <Card sx={{ maxWidth: 345 }}>
@@ -53,12 +55,12 @@ const EventCard = (props: Event) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Save changes</Button>
+          <Button size="small">Participate</Button>
         </CardActions>
       </Card>
       </Dialog>
     </div>
-    </>
+</>
   );
 };
 export default EventCard;

@@ -1,20 +1,23 @@
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import InterestsIcon from '@mui/icons-material/Interests';
 import { useNavigate } from "react-router-dom";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
+import roles from "../../../config/Roles";
 
 
 type Page = {
-  pageName: string, onClick: () => void}
+  pageName: string, onClick: () => void
+}
 
 
 const NavBar = () => {
   const navigate = useNavigate();
   const context = useContext(ActiveUserContext);
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -31,13 +34,21 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
-  const pages: Page[] = [ {pageName: "Home",  onClick: () => {return navigate("/")}}, {pageName: 'Events', onClick: () => {return navigate("/events")}},{pageName: 'About', onClick: () => {return navigate("/")}}];
-// if time basic profile page
-const settings: Page[] = [{pageName:'Profile', onClick: () => {return navigate("/")}}, {pageName: 'Own Events', onClick: () => { return navigate("/ownevents")}}, {pageName: 'Logout', onClick: () => {return context.logout}}];
+  const pages: Page[] = [{ pageName: "Home", onClick: () => { return navigate("/") } }, { pageName: 'Events', onClick: () => { return navigate("/events") } }, { pageName: 'About', onClick: () => { return navigate("/") } }];
+  // if time basic profile page
+  const settings: Page[] = [{ pageName: 'Profile', onClick: () => { return navigate("/") } }, { pageName: 'Own Events', onClick: () => { return navigate("/ownevents") } }, { pageName: 'Logout', onClick: () => { return context.logout } }];
+  const adminPages: Page[] = [
+    { pageName: "manage events", onClick: () => { return navigate("/events/manage") } },
+  ]
+  useEffect(() => {
+    if (context.user){
+      setIsAdmin(context.user!.roles.some(role => role.name === roles.ADMIN))
+    }
+  }, [])
 
   return (
-    <AppBar position="static" sx={{backgroundImage: "linear-gradient(gray, black)"}}>
-      <Container maxWidth="xl" sx={{width:"60%"}}>
+    <AppBar position="static" sx={{ backgroundImage: "linear-gradient(gray, black)" }}>
+      <Container maxWidth="xl" sx={{ width: "60%" }}>
         <Toolbar disableGutters >
           <InterestsIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -87,6 +98,21 @@ const settings: Page[] = [{pageName:'Profile', onClick: () => {return navigate("
                 display: { xs: 'block', md: 'none' },
               }}
             >
+              {pages.map((page) => (
+                <MenuItem key={page.pageName} onClick={page.onClick}>
+                  <Typography textAlign={"center"}>
+                    {page.pageName}
+                  </Typography>
+                </MenuItem>
+              ))}
+              {isAdmin &&
+                adminPages.map((page) => (
+                  <MenuItem key={page.pageName} onClick={page.onClick}>
+                    <Typography textAlign={"center"}>
+                      {page.pageName}
+                    </Typography>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
           <InterestsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -143,10 +169,11 @@ const settings: Page[] = [{pageName:'Profile', onClick: () => {return navigate("
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem onClick={setting.onClick}>
+                <MenuItem key={setting.pageName} onClick={setting.onClick}>
                   <Typography textAlign="center">{setting.pageName}</Typography>
                 </MenuItem>
               ))}
+
             </Menu>
           </Box>
         </Toolbar>
