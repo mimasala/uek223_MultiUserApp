@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { EventRow } from '../../../types/models/EventRow.model'
 import EventService from '../../../Services/EventService'
 import { Event } from '../../../types/models/Event.model'
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 const EventsManagePage = () => {
+    const [selectedRowsId, setSelectedRowsId] = useState<string[]>([])
     const [rows, setRows] = useState<EventRow[]>([])
     useEffect(() => {
       createEventRows()
@@ -31,7 +32,6 @@ const EventsManagePage = () => {
                     // deleteEvent: deleteEvent
                 }
             }))
-            console.log(rows, true);
           })
     }
     const columns: GridColDef[] = [
@@ -46,9 +46,18 @@ const EventsManagePage = () => {
         {field:"owner", headerName:"owner", width:100},
         // {field:"deleteEvent", headerName},
     ]
-    const handleSelectRows = () =>{
-      
+    const handleSelectRows = (e:any) =>{
+      setSelectedRowsId(e)
     }
+    const handleDeleteSelected = (e:any) =>{
+      selectedRowsId.forEach((id)=>{
+        EventService.deleteEvent(id)
+      })
+    }
+    useEffect(() => {
+      console.log(selectedRowsId);
+    }, [selectedRowsId])
+    
   return (
     <>
         <Box sx={{margin:"2em"}}>
@@ -58,9 +67,12 @@ const EventsManagePage = () => {
             pageSize={10}
             checkboxSelection
             autoHeight
-            onSelectionModelChange={}
+            onSelectionModelChange={handleSelectRows}
             />
         </Box>
+        <Button disabled={selectedRowsId.length === 0} onClick={handleDeleteSelected}>
+          delete selected
+        </Button>
     </>
   )
 }

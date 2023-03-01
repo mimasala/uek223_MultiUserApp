@@ -8,6 +8,8 @@ import EventPage from "../components/pages/EventPage/EventPage";
 import NotFoundPage from "../components/pages/NotFound/NotFoundPage";
 import OwnEventsPage from "../components/pages/OwnEventsPage/OwnEventsPage";
 import EventsManagePage from "../components/pages/EventsManage/EventsManagePage";
+import roles from "../config/Roles";
+import authorities from "../config/Authorities";
 
 /**
  * Router component renders a route switch with all available pages
@@ -50,7 +52,10 @@ const Router = () => {
       <Route
         path="/events/manage"
         element={
-          <PrivateRoute authorities={[]} element={<EventsManagePage />}></PrivateRoute>
+          <PrivateRoute authorities={[{
+            id:"21c942db-a275-43f8-bdd6-d048c21bf5ab",
+            name: authorities.USER_DELETE
+          }]} element={<EventsManagePage />}></PrivateRoute>
         }
       />
 

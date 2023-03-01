@@ -1,4 +1,9 @@
-enum authorities {}
+enum authorities {
+  USER_DELETE = "USER_DELETE",
+  DEFAULT = "DEFAULT",
+  USER_MODIFY = "USER_MODIFY",
+  ADMIN_READ = "ADMIN_READ",
+}
 /*
   add your authorities here. E.g:
 

@@ -59,6 +59,7 @@ const PrivateRoute: React.FC<Props> = ({
    * If the user doesn't possess the needed authorities Redirect the user to
    * /unauthorized
    */
+  console.log(authorities);
   if (!hasNeededAuthorities) {
     return <Navigate to='/unauthorized' replace={true} />;
   }
