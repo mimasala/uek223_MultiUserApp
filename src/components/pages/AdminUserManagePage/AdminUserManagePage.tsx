@@ -16,7 +16,7 @@ const AdminUserManagePage = () => {
         UserService.getAllUsers().then(response => {
             setUsers(response.data)
         })
-    });
+    }, []);
 
 
     return (
