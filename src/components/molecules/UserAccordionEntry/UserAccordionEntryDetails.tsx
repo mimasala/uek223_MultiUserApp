@@ -1,6 +1,7 @@
 import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Stack } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import React from 'react';
 import UserService from '../../../Services/UserService';
 import { User } from '../../../types/models/User.model';
@@ -13,6 +14,13 @@ type PropType = {
 const UserAccordionEntryDetails = ({ user }: PropType) => {
     const [openConfirmDelete, setOpenConfirmDelete] = React.useState<boolean>(false);
     const [openEditUser, setOpenEditUser] = React.useState<boolean>(false);
+    const [interests, setInterests] = React.useState<String[]>([]);
+
+    React.useEffect(() => {
+        axios.get("http://localhost:8088/api/user/"+user.id).then(response => {
+            setInterests(response.data.Labels)
+        })
+    }, [])
 
     const handleDeleteUser = () => {
         UserService.deleteUser(user.id)
@@ -44,9 +52,18 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                 padding: "10px",
                             }}>
                                 <Typography>Interests</Typography>
-                                <Chip label="Fun" />
-                                <Chip label="Food" />
-                                <Chip label="Dancing" />
+                                {
+                                    interests.map((interest) => <Chip label={interest} />)
+                                }
+                                {
+                                    interests.length == 0 ?
+                                        <>
+                                            <Chip label="Fun" />
+                                            <Chip label="Food" />
+                                            <Chip label="Dancing" />
+                                        </> :
+                                            <></>
+                                }
                             </Paper>
                         </Stack>
                     </Grid>
