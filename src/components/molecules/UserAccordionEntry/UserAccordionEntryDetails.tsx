@@ -42,7 +42,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
         <div>
             <AccordionDetails>
                 <Grid container xs={12}>
-                    <Grid md={2} xs={12} sx={{
+                    <Grid md={5} xs={12} sx={{
                         paddingRight: "10px",
                         marginRight: "10px",
                         borderRight: "2px gray solid"
@@ -67,7 +67,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                             </Paper>
                         </Stack>
                     </Grid>
-                    <Grid md={6} xs={12}>
+                    <Grid md={5} xs={12}>
                         <Stack spacing={1} direction="column">
                             <Paper sx={{
                                 padding: "10px",
@@ -78,10 +78,13 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                 }
                             </Paper>
 
-                            <Stack spacing={1} direction="row" >
-                                <Button variant="contained" onClick={() => setOpenEditUser(true)}>Edit</Button>
-                                <Button variant="contained" color="error" onClick={() => setOpenConfirmDelete(true)}>Delete</Button>
-                            </Stack>
+                            
+                        </Stack>
+                    </Grid>
+                    <Grid md={1} sx={{marginLeft: "10px", display: "grid", placeItems: "center"}}>
+                        <Stack spacing={1} direction="row" >
+                            <Button variant="contained" onClick={() => setOpenEditUser(true)}>Edit</Button>
+                            <Button variant="contained" color="error" onClick={() => setOpenConfirmDelete(true)}>Delete</Button>
                         </Stack>
                     </Grid>
                 </Grid>
