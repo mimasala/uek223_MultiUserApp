@@ -36,7 +36,7 @@ const NavBar = () => {
 
   const pages: Page[] = [{ pageName: "Home", onClick: () => { return navigate("/") } }, { pageName: 'Events', onClick: () => { return navigate("/events") } }, { pageName: 'About', onClick: () => { return navigate("/") } }];
   // if time basic profile page
-  const settings: Page[] = [{ pageName: 'Profile', onClick: () => { return navigate("/") } }, { pageName: 'Own Events', onClick: () => { return navigate("/ownevents") } }, { pageName: 'Logout', onClick: () => { return context.logout } }];
+  const settings: Page[] = [{ pageName: 'Profile', onClick: () => { return navigate("/profile") } }, { pageName: 'Own Events', onClick: () => { return navigate("/ownevents") } }, { pageName: 'Logout', onClick: () => { return context.logout() } }];
   const adminPages: Page[] = [
     { pageName: "manage events", onClick: () => { return navigate("/events/manage") } },
   ]

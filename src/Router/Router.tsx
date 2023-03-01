@@ -10,6 +10,7 @@ import OwnEventsPage from "../components/pages/OwnEventsPage/OwnEventsPage";
 import EventsManagePage from "../components/pages/EventsManage/EventsManagePage";
 import roles from "../config/Roles";
 import authorities from "../config/Authorities";
+import ProfilePage from "../components/pages/ProfilePage/ProfilePage";
 
 /**
  * Router component renders a route switch with all available pages
@@ -56,6 +57,13 @@ const Router = () => {
             id:"21c942db-a275-43f8-bdd6-d048c21bf5ab",
             name: authorities.USER_DELETE
           }]} element={<EventsManagePage />}></PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute authorities={[]} element={
+          <ProfilePage />}></PrivateRoute>
         }
       />
 
