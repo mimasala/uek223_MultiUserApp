@@ -20,7 +20,10 @@ const AdminUserManagePage = () => {
 
 
     return (
-        <div>
+        <div style= {{
+            marginLeft: "20px",
+            marginRight: "20px"
+        }}>
       {
         users.map((user, key) => {
             return <UserAccordionEntry expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
