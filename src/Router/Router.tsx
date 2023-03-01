@@ -11,6 +11,8 @@ import EventsManagePage from "../components/pages/EventsManage/EventsManagePage"
 import roles from "../config/Roles";
 import authorities from "../config/Authorities";
 import ProfilePage from "../components/pages/ProfilePage/ProfilePage";
+import AdminDashboardHomePage from "../components/pages/AdminDashboardHomePage/AdminDashboardHomePage";
+import AdminUserManagePage from "../components/pages/AdminUserManagePage/AdminUserManagePage";
 
 /**
  * Router component renders a route switch with all available pages
@@ -50,13 +52,31 @@ const Router = () => {
           <PrivateRoute authorities={[]} element={<UserPage />}></PrivateRoute>
         }
       />
+       <Route
+        path="/admin"
+        element={
+          <PrivateRoute authorities={[{
+            id:"21c942db-a275-43f8-bdd6-d048c21bf5ab",
+            name: authorities.USER_DELETE
+          }]} element={<AdminDashboardHomePage />}></PrivateRoute>
+        }
+      />
       <Route
-        path="/events/manage"
+        path="/admin/events"
         element={
           <PrivateRoute authorities={[{
             id:"21c942db-a275-43f8-bdd6-d048c21bf5ab",
             name: authorities.USER_DELETE
           }]} element={<EventsManagePage />}></PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <PrivateRoute authorities={[{
+            id:"21c942db-a275-43f8-bdd6-d048c21bf5ab",
+            name: authorities.USER_DELETE
+          }]} element={<AdminUserManagePage />}></PrivateRoute>
         }
       />
       <Route
