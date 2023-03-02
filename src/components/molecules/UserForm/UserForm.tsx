@@ -8,9 +8,11 @@ interface UserProps {
   user: User;
   submitActionHandler: (values: User) => void;
   cancelActionHandler?: () => void;
+  isAllowedEditRoles: boolean;
+  showPasswordField: boolean;
 }
 
-const UserForm = ({ user, submitActionHandler, cancelActionHandler }: UserProps) => {
+const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEditRoles, showPasswordField }: UserProps) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -20,11 +22,13 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler }: UserProps)
       firstName: user ? user.firstName : '',
       email: user ? user.email : '',
       roles: user ? user.roles : [],
+      password: '',
     },
     validationSchema: object({
       firstName: string().required().min(2).max(50),
       lastName: string().required().min(2).max(50),
       email: string().required().email(),
+      password: string().optional().min(8).max(50)
     }),
     onSubmit: (values: User) => {
       submitActionHandler(values);
@@ -71,6 +75,17 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler }: UserProps)
             error={Boolean(formik.touched.email && formik.errors.email)}
             value={formik.values.email}
           />
+          { showPasswordField &&
+          <TextField
+            id='password'
+            label='password'
+            variant='outlined'
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            error={Boolean(formik.touched.password && formik.errors.password)}
+            value={formik.values.password}
+          />}
+        
 
           {formik.errors.email && formik.touched.email ? (
             <div style={{ color: 'red' }}>{formik.errors.email}</div>

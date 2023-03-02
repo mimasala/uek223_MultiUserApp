@@ -31,7 +31,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
     }
 
     const handleSubmitEditUser = ( user: User ) => {
-        UserService.updateUser(user)
+        UserService.updateUser({"email": user.email, "firstName": user.firstName, "lastName": user.lastName, "id": user.id, "roles": user.roles}) //if we don't do this, the password will be set to <null>
             .then(response => {
                 setOpenEditUser(false);
                 console.log("Successfull edit");
@@ -103,7 +103,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
         <DialogContent>
           <UserForm user={user} 
             cancelActionHandler={() => setOpenEditUser(false)}
-            submitActionHandler={handleSubmitEditUser} />
+            submitActionHandler={handleSubmitEditUser} isAllowedEditRoles={true}/>
         </DialogContent>
         <DialogActions>
         </DialogActions>
