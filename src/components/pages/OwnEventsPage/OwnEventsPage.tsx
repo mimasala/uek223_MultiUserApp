@@ -22,10 +22,10 @@ const OwnEventsPage = () => {
 
     return(
         <Container fixed >
-        <Box sx={{  height: '90vh', textAlign: 'center',  overflow: 'auto'}} >
+        <Box className={eventStyles.contentBox} >
             <h1>Created Events</h1>
             <Container maxWidth="md" >
-            <Grid container spacing={10} sx={{ marginTop:"5%", marginBottom: "10%"}}>
+            <Grid container spacing={10} className={eventStyles.container}>
               {events.map((event: EventModel) => {
                 return(                   
                   <Grid item xs={6}>

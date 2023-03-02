@@ -114,91 +114,91 @@ const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: Even
   return (
     <>
     <Dialog
-        open={open}
-        keepMounted
-        onClose={handleCloseDialog}
-        aria-describedby="alert-dialog-slide-description">
-        <form onSubmit={formik.handleSubmit}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              component="img"
-              alt="organize events"
-              height="140"
-              image={formik.values.imageUrl}
-            />
+      open={open}
+      keepMounted
+      onClose={handleCloseDialog}
+      aria-describedby="alert-dialog-slide-description">
+      <form onSubmit={formik.handleSubmit}>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardMedia
+            component="img"
+            alt="organize events"
+            height="140"
+            image={formik.values.imageUrl}
+          />
           
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Edit your event
-              </Typography>
-              <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange} error={Boolean(formik.errors.imageUrl && formik.touched.imageUrl)} helperText={formik.touched.imageUrl && formik.errors.imageUrl}></TextField>
-              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange} error={Boolean(formik.errors.eventName && formik.touched.eventName)} helperText={formik.touched.eventName && formik.errors.eventName}></TextField>
-              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange} error={Boolean(formik.errors.location && formik.touched.location)} helperText={formik.touched.location && formik.errors.location}></TextField>
-              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange} error={Boolean(formik.errors.description && formik.touched.description)} helperText={formik.touched.description && formik.errors.description}></TextField>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              Edit your event
+            </Typography>
+            <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange} error={Boolean(formik.errors.imageUrl && formik.touched.imageUrl)} helperText={formik.touched.imageUrl && formik.errors.imageUrl}></TextField>
+            <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange} error={Boolean(formik.errors.eventName && formik.touched.eventName)} helperText={formik.touched.eventName && formik.errors.eventName}></TextField>
+            <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange} error={Boolean(formik.errors.location && formik.touched.location)} helperText={formik.touched.location && formik.errors.location}></TextField>
+            <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange} error={Boolean(formik.errors.description && formik.touched.description)} helperText={formik.touched.description && formik.errors.description}></TextField>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                            label="Startdate"
-                            inputFormat="YYYY-MM-DD"
-                            disablePast={true}
-                            value={formik.values.startDate}
-                            maxDate={moment().add(18, "months")}
-                            minDate={moment()}         
-                            onChange={(value) => {
-                              formik.setFieldValue(
-                                "startDate",
-                                value && moment(value).isValid()
-                                  ? value.add(value.utcOffset(), "minutes")
-                                  : moment(null),
-                                true
-                              );
-                              if (
-                                value &&
-                                moment(value).isValid() &&
-                                (value?.isAfter(formik.values.endDate) ||
-                                  !moment(formik.values.endDate.toString()).isValid())
-                              ) {
-                                formik.setFieldValue(
-                                  "endDate",
-                                  value.add(value.utcOffset(), "minutes"),
-                                  true
-                                );
-                              }
-                            }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                fullWidth
-                                required
-                                name="startDate"
-                                onBlur={formik.handleBlur}
-                              />
-                      )}/>    
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Startdate"
+                inputFormat="YYYY-MM-DD"
+                disablePast={true}
+                value={formik.values.startDate}
+                maxDate={moment().add(18, "months")}
+                minDate={moment()}         
+                onChange={(value) => {
+                  formik.setFieldValue(
+                    "startDate",
+                    value && moment(value).isValid()
+                    ? value.add(value.utcOffset(), "minutes")
+                    : moment(null),
+                    true
+                  );
+                  if (
+                    value &&
+                    moment(value).isValid() &&
+                    (value?.isAfter(formik.values.endDate) ||
+                    !moment(formik.values.endDate.toString()).isValid())
+                  ) {
+                  formik.setFieldValue(
+                    "endDate",
+                    value.add(value.utcOffset(), "minutes"),
+                    true
+                    );
+                  }
+                  }}
+                  renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    required
+                    name="startDate"
+                    onBlur={formik.handleBlur}
+                    />
+                  )}/>    
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Enddate"
-                            inputFormat="YYYY-MM-DD"
-                            disablePast={true}
-                            maxDate={moment().add(18, "months")}
-                            minDate={formik.values.startDate}
-                            value={formik.values.endDate}
-                            onChange={(value) => {
-                              formik.setFieldValue(
-                                "endDate",
-                                value && value.add(value.utcOffset(), "minutes"),
-                                true
-                              );
-                            }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                fullWidth
-                                required
-                                name="endDate"
-                                onBlur={formik.handleBlur}
-                              />
-                            )} />
+                <DatePicker
+                  label="Enddate"
+                  inputFormat="YYYY-MM-DD"
+                  disablePast={true}
+                  maxDate={moment().add(18, "months")}
+                  minDate={formik.values.startDate}
+                  value={formik.values.endDate}
+                  onChange={(value) => {
+                  formik.setFieldValue(
+                    "endDate",
+                    value && value.add(value.utcOffset(), "minutes"),
+                    true
+                  );
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      required
+                      name="endDate"
+                      onBlur={formik.handleBlur}
+                    />
+                  )} />
               </LocalizationProvider>
               {!isNewEvent && (
                 <Box>

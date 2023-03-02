@@ -18,10 +18,6 @@ import AdminUserManagePage from "../components/pages/AdminUserManagePage/AdminUs
  */
 
 const Router = () => {
-  //const { checkRole } = useContext(ActiveUserContext);
-
-  /** navigate to different "home"-locations depending on Role the user have */
-
   return (
     <Routes>
       <Route path={"/"} element={<HomePage />} />

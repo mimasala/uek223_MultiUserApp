@@ -9,5 +9,4 @@ export type EventRow = {
     location:string
     description:string
     owner:string
-    // deleteEvent:{}
 }

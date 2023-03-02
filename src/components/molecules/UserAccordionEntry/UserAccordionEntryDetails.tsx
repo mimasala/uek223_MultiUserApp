@@ -26,7 +26,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
         UserService.deleteUser(user.id)
             .then(response => {
                 setOpenConfirmDelete(false);
-                console.log("Successfull deletion."); //TODO refresh list.
+                console.log("Successfull deletion."); 
             })
     }
 
@@ -79,7 +79,6 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                 }
                             </Paper>
 
-                            
                         </Stack>
                     </Grid>
                     <Grid md={1} sx={{marginLeft: "10px", display: "grid", placeItems: "center"}}>

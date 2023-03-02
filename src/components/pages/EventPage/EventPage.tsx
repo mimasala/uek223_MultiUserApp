@@ -1,16 +1,17 @@
 import { Box, Container, Grid, Pagination, Stack } from "@mui/material";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { positional } from "yargs";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";
 import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
 import EventCard from "../../organisms/EventCard/EventCard";
+import { useStyles } from "./Event.style";
 
 const EventPage = () => {
     const [page, setPage] = useState(2);
     const [count, setCount] = useState(0);
     const context = useContext(ActiveUserContext);
     const [events, setEvents] = useState<EventRecommendation[]>([]);
+    const eventStyles = useStyles();
 
     const handleChange = (event: ChangeEvent<unknown>, value: number) => {
         EventService.getRecommendationsForUser(context.user!.id, value-1, 4).then((res) => {
@@ -34,10 +35,10 @@ const EventPage = () => {
 
     return(
         <Container fixed >
-        <Box sx={{  height: '68vh', textAlign: 'center',  overflow: 'auto', marginBottom: "20%"}} >
+        <Box className={eventStyles.contentBox} >
             <h1 >Available Events</h1>
-            <Container maxWidth="md" sx={{height:'50vh'}}>
-              <Grid container spacing={10} sx={{ marginTop:"10%", marginBottom: "20%"}}>
+            <Container maxWidth="md" className={eventStyles.container}>
+              <Grid container spacing={10} className={eventStyles.gridContainer}>
                 {events.map((event: EventRecommendation, key) => {
                     return(
                       <Grid item xs={6}>
@@ -47,7 +48,7 @@ const EventPage = () => {
                   })}
                 </Grid>
             </Container>
-            <Stack spacing={2} sx={{alignItems:"center", marginBottom:"0"}}>
+            <Stack spacing={2} className={eventStyles.stack}>
                   <Pagination count={count} page={page} onChange={handleChange} />
             </Stack>
         </Box>

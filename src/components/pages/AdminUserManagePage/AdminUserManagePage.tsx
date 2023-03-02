@@ -5,11 +5,13 @@ import UserAccordionEntry from '../../organisms/UserAccordionEntry/UserAccordion
 import { Dialog, DialogContent, DialogTitle, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import UserForm from '../../molecules/UserForm/UserForm';
+import { useStyles } from './AdminUserManagePage.style';
 
 const AdminUserManagePage = () => {
     const [expanded, setExpanded] = React.useState<string | false>(false);
     const [users, setUsers] = React.useState<User[]>([]);
     const [addUserDialog, setAddUserDialog] = React.useState<boolean>(false);
+    const adminStyles = useStyles();
 
     React.useEffect(() => {
         UserService.getAllUsers().then(response => {
@@ -28,18 +30,13 @@ const AdminUserManagePage = () => {
     }
 
     return (
-        <div style= {{
-            marginLeft: "20px",
-            marginRight: "20px"
-        }}>
+        <div className={adminStyles.contentDiv}>
       {
         users.map((user, key) => {
             return <UserAccordionEntry key={key} expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
         })
       }
-        <Fab color="primary" aria-label="add" style={{
-            position: "fixed", bottom: "75px", right: "10px"
-        }} onClick={handleAddUser}>
+        <Fab color="primary" aria-label="add" className={adminStyles.fab} onClick={handleAddUser}>
             <AddIcon />
         </Fab>
 

@@ -5,6 +5,7 @@ import { object, string } from 'yup';
 import React, { useState } from 'react';
 import { Role } from '../../../types/models/Role.model';
 import RoleService from '../../../Services/RoleService';
+import { useStyles } from './UserForm.style';
 
 interface UserProps {
   user: User;
@@ -39,12 +40,12 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
   const theme = useTheme();
   const [personName, setPersonName] = useState<string[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
+  const userStyles = useStyles();
   
   React.useEffect(() => {
     RoleService.findAll().then(response => {
       setRoles(response.data);
     })
-    console.log("personname ", personName);
   }, [])
 
   const formik = useFormik({
@@ -79,7 +80,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='firstName'
             label='Firstname'
             variant='outlined'
-            sx={{ paddingRight: '10px', marginTop: "10px" }}
+            className={userStyles.textfields}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.firstName && formik.errors.firstName)}
@@ -92,7 +93,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='lastName'
             label='Lastname'
             variant='outlined'
-            sx={{ paddingRight: '10px', marginTop: "10px" }}
+            className={userStyles.textfields}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.lastName && formik.errors.lastName)}
@@ -105,7 +106,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='email'
             label='E-Mail'
             variant='outlined'
-            sx={{ paddingRight: '10px', marginTop: "10px" }}
+            className={userStyles.textfields}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.email && formik.errors.email)}
@@ -116,7 +117,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='password'
             label='password'
             variant='outlined'
-            sx={{ paddingRight: '10px', marginTop: "10px" }}
+            className={userStyles.textfields}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.password && formik.errors.password)}
@@ -128,7 +129,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id="roles"
             name="roles"
             multiple
-            sx={{ paddingRight: '10px', marginTop: "10px" }}
+            className={userStyles.textfields}
             value={formik.values.roles}
             onChange={formik.handleChange}
             input={<OutlinedInput id="roles-2" label="Chip" />}

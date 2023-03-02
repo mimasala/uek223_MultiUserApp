@@ -14,11 +14,6 @@ const EventsManagePage = () => {
     const createEventRows = () =>{
         EventService.getAllEvents().then(data =>{
             setRows(data.data.map((event:EventModel) =>{
-                // const deleteEvent = {
-                //     deleteEvent: (id:string) => {
-                //         EventService.deleteEvent(id)
-                //     }
-                // }
                 return {
                     id:event.id,
                     eventName:event.eventName,
@@ -29,7 +24,6 @@ const EventsManagePage = () => {
                     location:event.location,
                     description:event.description,
                     owner:event.eventOwner?.firstName + " " + event.eventOwner?.lastName,
-                    // deleteEvent: deleteEvent
                 }
             }))
           })
@@ -44,7 +38,6 @@ const EventsManagePage = () => {
         {field:"location", headerName:"location", width:100},
         {field:"description", headerName:"description", width:100},
         {field:"owner", headerName:"owner", width:100},
-        // {field:"deleteEvent", headerName},
     ]
     const handleSelectRows = (e:any) =>{
       setSelectedRowsId(e)

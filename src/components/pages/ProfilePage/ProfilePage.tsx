@@ -25,23 +25,21 @@ const ProfilePage = () => {
     return (
     <div>
         <Box sx={{margin:"30px"}}>
-            <Card
-            elevation={1}>
-                {!editing && <Box sx={{
-                    margin:"20px"
-                }}>
-                    <Typography variant='h3'>
-                        {user?.firstName + " " + user?.lastName}
-                    </Typography>
-                    <Typography variant='subtitle2'>
-                        id: {user?.id}
-                    </Typography>
-                </Box>}
-                {editing &&
+            <Card elevation={1}>
+              {!editing && 
+              <Box sx={{ margin:"20px" }}>
+                <Typography variant='h3'>
+                  {user?.firstName + " " + user?.lastName}
+                </Typography>
+                <Typography variant='subtitle2'>
+                  id: {user?.id}
+                </Typography>
+              </Box>}
+              {editing &&
                 <Box sx={{margin:"10px"}}>
                 <UserForm user={user!} cancelActionHandler={() => setEditing(false)} submitActionHandler={handleSubmit} isAllowedEditRoles={false} showPasswordField={true}></UserForm>
                 </Box>
-                }
+              }
             </Card>
             {!editing &&
                 <Button onClick={handleEdit}>Edit</Button>
