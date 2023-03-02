@@ -1,6 +1,7 @@
 import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Paper, Stack } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import React from 'react';
 import UserService from '../../../Services/UserService';
 import { User } from '../../../types/models/User.model';
@@ -13,6 +14,13 @@ type PropType = {
 const UserAccordionEntryDetails = ({ user }: PropType) => {
     const [openConfirmDelete, setOpenConfirmDelete] = React.useState<boolean>(false);
     const [openEditUser, setOpenEditUser] = React.useState<boolean>(false);
+    const [interests, setInterests] = React.useState<String[]>([]);
+
+    React.useEffect(() => {
+        axios.get("http://localhost:8088/api/user/"+user.id).then(response => {
+            setInterests(response.data.Labels)
+        })
+    }, [])
 
     const handleDeleteUser = () => {
         UserService.deleteUser(user.id)
@@ -23,7 +31,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
     }
 
     const handleSubmitEditUser = ( user: User ) => {
-        UserService.updateUser(user)
+        UserService.updateUser({"email": user.email, "firstName": user.firstName, "lastName": user.lastName, "id": user.id, "roles": user.roles}) //if we don't do this, the password will be set to <null>
             .then(response => {
                 setOpenEditUser(false);
                 console.log("Successfull edit");
@@ -34,7 +42,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
         <div>
             <AccordionDetails>
                 <Grid container xs={12}>
-                    <Grid md={2} xs={12} sx={{
+                    <Grid md={5} xs={12} sx={{
                         paddingRight: "10px",
                         marginRight: "10px",
                         borderRight: "2px gray solid"
@@ -44,13 +52,22 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                 padding: "10px",
                             }}>
                                 <Typography>Interests</Typography>
-                                <Chip label="Fun" />
-                                <Chip label="Food" />
-                                <Chip label="Dancing" />
+                                {
+                                    interests.map((interest) => <Chip label={interest} />)
+                                }
+                                {
+                                    interests.length == 0 ?
+                                        <>
+                                            <Chip label="Fun" />
+                                            <Chip label="Food" />
+                                            <Chip label="Dancing" />
+                                        </> :
+                                            <></>
+                                }
                             </Paper>
                         </Stack>
                     </Grid>
-                    <Grid md={6} xs={12}>
+                    <Grid md={5} xs={12}>
                         <Stack spacing={1} direction="column">
                             <Paper sx={{
                                 padding: "10px",
@@ -61,10 +78,13 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                 }
                             </Paper>
 
-                            <Stack spacing={1} direction="row" >
-                                <Button variant="contained" onClick={() => setOpenEditUser(true)}>Edit</Button>
-                                <Button variant="contained" color="error" onClick={() => setOpenConfirmDelete(true)}>Delete</Button>
-                            </Stack>
+                            
+                        </Stack>
+                    </Grid>
+                    <Grid md={1} sx={{marginLeft: "10px", display: "grid", placeItems: "center"}}>
+                        <Stack spacing={1} direction="row" >
+                            <Button variant="contained" onClick={() => setOpenEditUser(true)}>Edit</Button>
+                            <Button variant="contained" color="error" onClick={() => setOpenConfirmDelete(true)}>Delete</Button>
                         </Stack>
                     </Grid>
                 </Grid>
@@ -81,9 +101,9 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
           {"Edit " + user.firstName}
         </DialogTitle>
         <DialogContent>
-          <UserForm user={user} 
-            cancelActionHandler={() => setOpenEditUser(false)}
-            submitActionHandler={handleSubmitEditUser} />
+          <UserForm user={user}
+                    cancelActionHandler={() => setOpenEditUser(false)}
+                    submitActionHandler={handleSubmitEditUser} isAllowedEditRoles={true} showPasswordField={false}/>
         </DialogContent>
         <DialogActions>
         </DialogActions>

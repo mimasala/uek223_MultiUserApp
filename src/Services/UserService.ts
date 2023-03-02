@@ -12,13 +12,14 @@ const UserService = {
   },
 
   addUser: (user: User) => {
-    return api.post('/user/registerUser', user).then((res) => {
+    return api.post('/user/register', user).then((res) => {
       return res;
     });
   },
 
-  getAllUsers: () => {
-    return api.get(`/user`);
+  getAllUsers: async (): Promise<User[]> => {
+    const { data } = await api.get<User[]>(`/user`);
+    return data;
   },
 
   deleteUser: (id: string) => {

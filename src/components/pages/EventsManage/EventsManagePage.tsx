@@ -60,19 +60,19 @@ const EventsManagePage = () => {
     
   return (
     <>
-        <Box sx={{margin:"2em"}}>
-            <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            checkboxSelection
-            autoHeight
-            onSelectionModelChange={handleSelectRows}
-            />
-        </Box>
-        <Button disabled={selectedRowsId.length === 0} onClick={handleDeleteSelected}>
-          delete selected
-        </Button>
+      <Box sx={{margin:"2em"}}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          checkboxSelection
+          autoHeight
+          onSelectionModelChange={handleSelectRows}
+          />
+      </Box>
+      <Button disabled={selectedRowsId.length === 0} onClick={handleDeleteSelected}>
+        delete selected
+      </Button>
     </>
   )
 }

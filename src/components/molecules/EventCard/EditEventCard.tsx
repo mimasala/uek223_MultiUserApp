@@ -1,17 +1,20 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Dialog, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Dialog, Pagination, Stack, TextField, Typography } from "@mui/material";
 import MuiButton from "@mui/material/Button";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { EventModel } from "../../../types/models/Event.model";
 import { useFormik } from "formik";
 import EventService from "../../../Services/EventService";
 import DeleteIcon from '@mui/icons-material/Delete';
+import ParticipationService from "../../../Services/ParticipationService";
+import { User } from "../../../types/models/User.model";
 
 const EditEventCard = (event: EventModel) => {
   const [openEditEventDialog, setOpenEditEventDialog] = useState(false);
-  //delete button
+  const [page, setPage] = useState(1);
+  const [participants, setParticipants] = useState<User[]>([]);
 
   const submitActionHandler = (values: EventModel) => {
     EventService.updateEvent(values);
@@ -19,20 +22,32 @@ const EditEventCard = (event: EventModel) => {
   };
 
   const handleDelete = () => {
-    EventService.deleteEvent(event.id);
+    if(event.id){
+      EventService.deleteEvent(event.id);
+    }
     setOpenEditEventDialog(false);
-  }
+  }  
 
-  useEffect(() => {
-    console.log(event, event.id)
+  const handleChange = (changeEvent: ChangeEvent<unknown>, value: number) => {
+    ParticipationService.getAllParticipantsInEvent(event.id, value-1, 3).then((res) => {
+        setParticipants(res);
+      });
+    setPage(value)
+  };
+
+  useEffect(() => { 
+    return () => {
+      ParticipationService.getAllParticipantsInEvent(event.id, 0, 3).then((res) => {
+        setParticipants(res);
+      });
+    }
   }, [])
   
 
   const formik = useFormik<EventModel>({
     initialValues: {
-      id: event ? event.id : "123",
+      id: event ? event.id : "",
       eventName: event ? event.eventName : "",
-      numberOfCurrentParticipants: event ? event.numberOfCurrentParticipants : 0,
       participantsLimit: event ? event.participantsLimit : 0,
       startDate: event ? event.startDate : moment(),
       endDate: event ? event.endDate : moment(),
@@ -48,9 +63,6 @@ const EditEventCard = (event: EventModel) => {
     enableReinitialize: true,
   });
 
-  // get all participants
-  // enable adding participants
-
   const handleClickOpenEditEvent = () => {
     setOpenEditEventDialog(true);
   };
@@ -59,10 +71,10 @@ const EditEventCard = (event: EventModel) => {
   };
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth:400 }}>
         <CardMedia
           component="img"
-          alt="green iguana"
+          alt="Event image"
           height="140"
           image={event.imageUrl}
         />
@@ -94,11 +106,7 @@ const EditEventCard = (event: EventModel) => {
               <Typography gutterBottom variant="h5" component="div">
                 Edit your event
               </Typography>
-              <Button variant="contained" component="label">
-                Upload Eventimage
-                <input type="file" hidden/>
-              </Button>
-
+              <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange}></TextField>
               <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange}></TextField>
               <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange}></TextField>
               <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange}></TextField>
@@ -167,6 +175,16 @@ const EditEventCard = (event: EventModel) => {
                               />
                             )} />
               </LocalizationProvider>
+              <Box>
+                {participants.map((participant: User) => {
+                    return(                   
+                      <p>{participant.firstName} {participant.lastName}</p>
+                    ); 
+                  })}
+                <Stack spacing={2} sx={{alignItems:"center"}}>
+                  <Pagination count={1} page={page} onChange={handleChange} />
+                </Stack>
+              </Box>
             </CardContent>
             <CardActions>
               <MuiButton type="submit" variant="contained">Save changes</MuiButton>

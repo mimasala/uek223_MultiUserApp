@@ -14,7 +14,7 @@ const UserTable = () => {
 
   useEffect(() => {
     UserService.getAllUsers().then((data) => {
-      setUsers(data.data);
+      setUsers(data);
     });
   }, []);
 
