@@ -1,3 +1,4 @@
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Dialog, DialogTitle, FormControlLabel, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, TextField, Typography, useRadioGroup } from "@mui/material";
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Dialog, FormControlLabel, List, ListItem, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useContext, useEffect, useState } from "react";
@@ -11,11 +12,18 @@ import EventService from "../../../Services/EventService";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import UserService from "../../../Services/UserService";
 import { User } from "../../../types/models/User.model";
+import { blue } from "@mui/material/colors";
+import ParticipationService from "../../../Services/ParticipationService";
 import { object, string } from "yup";
 
 const NewEventCard = () => {
+  // formik validation 
+  const [openAddPeople, setOpenAddPeople] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [addedUsers, setAddedUsers] = useState<User[]>([]);
+  const [createdEventId, setCreatedEventId] = useState<string>('');
+
   const context = useContext(ActiveUserContext);
 
   const handleClickOpen = () => {
@@ -28,33 +36,49 @@ const NewEventCard = () => {
     if(context.user){
       values.eventOwner = context.user;
     }
-    EventService.addEvent(values);
+    EventService.addEvent(values).then(response => {
+      setCreatedEventId(response.id);
+    });
     setOpen(false);
+    setOpenAddPeople(true);
+  };
+  
+  const handleCloseUser = () => {
+    setOpenAddPeople(false);
   };
 
-  const handleSaveParticipants = () => {
-    console.log("works");
-  }
-
-  const handleToggle = (value: User) => () => {
-    const currentIndex = users.indexOf(value);
-    const newChecked = [...users];
-    if (currentIndex === -1) {
-      newChecked.push(value);
+  const handleListItemClick = (value: User) => {
+    let copyOfAddedUsers = [...addedUsers];
+    const index = copyOfAddedUsers.indexOf(value, 0);
+    if (index > -1) {
+      copyOfAddedUsers.splice(index, 1);
     } else {
-      newChecked.splice(currentIndex, 1);
+      copyOfAddedUsers.push(value);
     }
-    setUsers(newChecked);
+    
+    setAddedUsers(copyOfAddedUsers);
   };
+
+  const handleSubmitAddUsers = () => {
+    ParticipationService.signManyUserUpForEvent(createdEventId, addedUsers.map(user => user.id))
+    .then(res => {
+      setOpenAddPeople(false);
+    })
+  }
 
   useEffect(() => { 
     return () => {
       UserService.getAllUsers().then((data) => {
-        setUsers(data);
+        setUsers(data.filter(user => {
+          console.log(user);
+          if(user.roles.filter(role => role.name === "ADMIN").length > 0) {
+                return false;
+            }
+          return true;
+        }));
       });
     }
   }, [])
-
   
   const eventValidationSchema = object().shape({
     eventName: string()
@@ -218,22 +242,7 @@ const NewEventCard = () => {
                   />
                 )} />
               </LocalizationProvider>
-              <Box>
-                Choose participants
-                <List>
-                  {users.map((user) => {
-                    return (
-                      <ListItem dense onClick={handleToggle(user)}>
-                        <FormControlLabel
-                          control={<Checkbox checked={users.indexOf(user) !== -1} value={user}/>}
-                          label={user.firstName + " " + user.lastName}
-                        />
-                      </ListItem>
-                    );
-                  })}
-                </List>
-                <MuiButton onClick={handleSaveParticipants}>Save participants</MuiButton>
-              </Box>
+              
             </CardContent>
             <CardActions>
               <MuiButton type="submit" variant="contained">Save</MuiButton>
@@ -241,6 +250,26 @@ const NewEventCard = () => {
           </Card>
         </form>
       </Dialog>
+
+    <Dialog onClose={handleCloseUser} open={openAddPeople}>
+      <DialogTitle>Add event participants</DialogTitle>
+      <List sx={{ pt: 0 }}>
+        {users.map((user) => (
+          <ListItem disableGutters sx={{
+             backgroundColor: (addedUsers.indexOf(user, 0) === -1 ? "#FFF" : "#DDD")
+          }}>
+            <ListItemButton onClick={() => handleListItemClick(user)} key={user.id}>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={user.email} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Button onClick={handleSubmitAddUsers} variant="contained">Submit</Button>
+    </Dialog>
     </>
   );
 };
