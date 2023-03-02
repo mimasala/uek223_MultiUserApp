@@ -14,7 +14,7 @@ const AdminUserManagePage = () => {
 
     React.useEffect(() => {
         UserService.getAllUsers().then(response => {
-            setUsers(response.data)
+            setUsers(response)
         })
     });
 

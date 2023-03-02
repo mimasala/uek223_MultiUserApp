@@ -19,24 +19,23 @@ const OwnEventsPage = () => {
               });
           };
       }, []);
-  
 
-    // event creation cards
     return(
         <Container fixed >
-        <Box sx={{ bgcolor: '#cfe8fc', height: '90vh', textAlign: 'center',  overflow: 'auto'}} >
+        <Box sx={{  height: '90vh', textAlign: 'center',  overflow: 'auto'}} >
             <h1>Created Events</h1>
-            <Button variant="outlined">New</Button>
             <Container maxWidth="md" >
-            <Grid container spacing={10} sx={{ bgcolor: '#cfe8fc', marginTop:"5%", marginBottom: "10%"}}>
-                {events.map((event: EventModel) => {
-                    return(                   
-                      <Grid item xs={6}>
-                        <EditEventCard {...event}/>
-                      </Grid>
-                    ); 
-                  })}
+            <Grid container spacing={10} sx={{ marginTop:"5%", marginBottom: "10%"}}>
+              {events.map((event: EventModel) => {
+                return(                   
+                  <Grid item xs={6}>
+                    <EditEventCard {...event}/>
+                  </Grid>
+                ); 
+              })}
+              <Grid item xs={6}>
                 <NewEventCard/>
+              </Grid>               
             </Grid>
             </Container>
         </Box>

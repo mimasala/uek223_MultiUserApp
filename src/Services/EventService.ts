@@ -14,12 +14,12 @@ const EventService = {
   },
 
   addEvent: (event: EventModel) => {
-    return api.post('/event/createEvent', event).then((res) => {
+    return api.post('/event', event).then((res) => {
       return res.data;
     });
   },
-  getRecommendationsForUser:(userId: String, page: number, pageLength: number )=>{
-    return api.get(`/recommendation/${userId}`, { params: { page, pageLength } }).then((res) => {
+  getRecommendationsForUser:(userId: String, page: number, pageLength: number ) => {
+    return api.get(`/recommendation/${userId}`, { params: { page, pageLength}}).then((res) => {
       return res.data;
     });
   },
@@ -31,8 +31,8 @@ const EventService = {
   deleteEvent: (id: string) => {
     return api.delete(`/event/${id}`);
   },
-  getOwnEvents: async (userId: string): Promise<EventModel[]> => {
-    return api.get(`/event`, {params: userId }).then((res) => {
+  getOwnEvents: async (user_id: string): Promise<EventModel[]> => {
+    return api.get(`/event`, {params: {user_id} }).then((res) => {
       return res.data;
     });
   },

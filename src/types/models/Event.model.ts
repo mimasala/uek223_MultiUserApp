@@ -4,7 +4,6 @@ import { User } from "./User.model";
 export type EventModel = {
   id: string;
   eventName: string;
-  numberOfCurrentParticipants: number;
   participantsLimit: number;
   startDate: Moment;
   endDate: Moment;

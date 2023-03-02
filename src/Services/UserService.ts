@@ -17,8 +17,9 @@ const UserService = {
     });
   },
 
-  getAllUsers: () => {
-    return api.get(`/user`);
+  getAllUsers: async (): Promise<User[]> => {
+    const { data } = await api.get<User[]>(`/user`);
+    return data;
   },
 
   deleteUser: (id: string) => {
