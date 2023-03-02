@@ -39,7 +39,7 @@ const AdminUserManagePage = () => {
         }}>
       {
         users.map((user, key) => {
-            return <UserAccordionEntry expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
+            return <UserAccordionEntry key={key} expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
         })
       }
         <Fab color="primary" aria-label="add" style={{
