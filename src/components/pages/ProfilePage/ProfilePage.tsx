@@ -41,7 +41,7 @@ const ProfilePage = () => {
                 </Box>}
                 {editing &&
                 <Box sx={{margin:"10px"}}>
-                <UserForm user={user!} cancelActionHandler={() => setEditing(false)} submitActionHandler={handleSubmit}></UserForm>
+                <UserForm user={user!} cancelActionHandler={() => setEditing(false)} submitActionHandler={handleSubmit} isAllowedEditRoles={false} showPasswordField={true}></UserForm>
                 </Box>
                 }
             </Card>

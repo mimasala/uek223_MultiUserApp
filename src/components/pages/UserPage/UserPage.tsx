@@ -37,6 +37,6 @@ const UserPage = () => {
     }
   };
 
-  return <UserForm user={user} submitActionHandler={submitActionHandler} />;
+  return <UserForm user={user} submitActionHandler={submitActionHandler} isAllowedEditRoles={false} showPasswordField={false}/>;
 };
 export default UserPage;
