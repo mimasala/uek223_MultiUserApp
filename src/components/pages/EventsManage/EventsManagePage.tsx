@@ -48,7 +48,6 @@ const EventsManagePage = () => {
       })
     }
     useEffect(() => {
-      console.log(selectedRowsId);
     }, [selectedRowsId])
     
   return (

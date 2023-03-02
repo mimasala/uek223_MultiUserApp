@@ -24,7 +24,6 @@ const EventPage = () => {
     useEffect(() => {
         return () => {
           EventService.getNumberOfEventPages(4).then((res) => {
-            console.log(res)
             setCount(res);
           })
           EventService.getRecommendationsForUser(context.user!.id, 0, 4).then((res) => {

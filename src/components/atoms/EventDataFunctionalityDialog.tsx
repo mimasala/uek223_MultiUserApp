@@ -67,7 +67,6 @@ const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: Even
         return () => {
         if(event?.id){
           ParticipationService.getAllParticipantsInEvent(event.id, 0, 3).then((res) => {
-            console.log("part", res)
             setParticipants(res);
           });
         }
