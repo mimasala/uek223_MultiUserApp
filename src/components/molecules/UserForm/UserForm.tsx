@@ -70,17 +70,17 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
     enableReinitialize: true,
   });
 
-  
+
  
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <Box sx={{ paddingTop: '15px' }}>
+        <Box sx={{ paddingTop: '15px', flexDirection: "column", display: "flex"}}>
           <TextField
             id='firstName'
             label='Firstname'
             variant='outlined'
-            sx={{ paddingRight: '10px' }}
+            sx={{ paddingRight: '10px', marginTop: "10px" }}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.firstName && formik.errors.firstName)}
@@ -93,7 +93,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='lastName'
             label='Lastname'
             variant='outlined'
-            sx={{ paddingRight: '10px' }}
+            sx={{ paddingRight: '10px', marginTop: "10px" }}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.lastName && formik.errors.lastName)}
@@ -106,6 +106,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='email'
             label='E-Mail'
             variant='outlined'
+            sx={{ paddingRight: '10px', marginTop: "10px" }}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.email && formik.errors.email)}
@@ -116,6 +117,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id='password'
             label='password'
             variant='outlined'
+            sx={{ paddingRight: '10px', marginTop: "10px" }}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             error={Boolean(formik.touched.password && formik.errors.password)}
@@ -127,6 +129,7 @@ const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEdi
             id="roles"
             name="roles"
             multiple
+            sx={{ paddingRight: '10px', marginTop: "10px" }}
             value={formik.values.roles}
             onChange={formik.handleChange}
             input={<OutlinedInput id="roles-2" label="Chip" />}
