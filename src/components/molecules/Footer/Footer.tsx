@@ -1,14 +1,10 @@
 import "./footer.css";
-import InterestsIcon from '@mui/icons-material/Interests';
 
 const Footer = () => {
-
-
   return (
     <footer className="footer-container">
       <div className="footer-content">
         <div className="footer-logo">
-          
           <p>© 2023 OurSpace</p>
         </div>
         <div className="footer-links">

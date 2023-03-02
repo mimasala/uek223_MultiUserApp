@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid } from "@mui/material";
+import { Box,  Container, Grid } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";

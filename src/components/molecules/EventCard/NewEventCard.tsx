@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Dialog, FormControlLabel, List, ListItem, ListItemText, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Dialog, FormControlLabel, List, ListItem, TextField, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useContext, useEffect, useState } from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -11,13 +11,13 @@ import EventService from "../../../Services/EventService";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import UserService from "../../../Services/UserService";
 import { User } from "../../../types/models/User.model";
+import { object, string } from "yup";
 
 const NewEventCard = () => {
-  // formik validation 
-
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const context = useContext(ActiveUserContext);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,7 +47,6 @@ const NewEventCard = () => {
     setUsers(newChecked);
   };
 
-
   useEffect(() => { 
     return () => {
       UserService.getAllUsers().then((data) => {
@@ -55,6 +54,23 @@ const NewEventCard = () => {
       });
     }
   }, [])
+
+  
+  const eventValidationSchema = object().shape({
+    eventName: string()
+      .required("Name is required")
+      .min(3, "eventNameSizeValidation")
+      .max(50, "eventNameSizeValidation"),   
+      location: string()
+      .required("Location is required")
+      .min(3, "Location should be at least 3 characters long")
+      .max(30, "Location can max be 30 characters long"),   
+      description: string()
+      .required("Description is required")
+      .min(3, "Description should be at least 3 characters long")
+      .max(200, "Description can max be 200 characters long"),   
+      imageUrl: string().url("Needs to be a url"),
+  });
   
   const formik = useFormik({
     initialValues: {
@@ -68,7 +84,7 @@ const NewEventCard = () => {
       eventOwner: undefined,
       imageUrl: "",
     },
-    //validation
+    validationSchema: eventValidationSchema,
     onSubmit: (values: EventModel) => {
       submitActionHandler(values);
     },
@@ -105,11 +121,39 @@ const NewEventCard = () => {
               <Typography gutterBottom variant="h5" component="div">
                 Create an event
               </Typography>
+              <TextField name="imageUrl" 
+              label="Image url"
+              type="text" 
+              value={formik.values.imageUrl} 
+              onChange={formik.handleChange} 
+              error={Boolean(formik.errors.imageUrl && formik.touched.imageUrl)} 
+              helperText={formik.touched.imageUrl && formik.errors.imageUrl}>
+              </TextField>
+              <TextField name="eventName" 
+              label="Event name" 
+              type="text" 
+              value={formik.values.eventName} 
+              onChange={formik.handleChange} 
+              error={Boolean(formik.errors.eventName && formik.touched.eventName)} 
+              helperText={formik.touched.eventName && formik.errors.eventName }>
+              </TextField>
+              <TextField name="location" 
+              label="Location" 
+              type="text" 
+              value={formik.values.location} 
+              onChange={formik.handleChange} 
+              error={Boolean(formik.errors.location && formik.touched.location)} 
+              helperText={formik.touched.location && formik.errors.location}>
+              </TextField>
+              <TextField name="description" 
+              label="Description" 
+              type="text" 
+              value={formik.values.description} 
+              onChange={formik.handleChange} 
+              error={Boolean(formik.errors.description && formik.touched.description)} 
+              helperText={formik.touched.description && formik.errors.description}>
 
-              <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange}></TextField>
-              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange}></TextField>
-              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange}></TextField>
-              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange}></TextField>
+              </TextField>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Startdate"
@@ -129,11 +173,11 @@ const NewEventCard = () => {
                   if (
                     value &&
                     moment(value).isValid() &&
-                    (value?.isAfter(formik.values.endDate) ||
-                    !moment(formik.values.endDate.toString()).isValid())
+                    (value?.isAfter(formik.values.startDate) ||
+                    !moment(formik.values.startDate.toString()).isValid())
                     ) {
                       formik.setFieldValue(
-                      "endDate",
+                      "startDate",
                       value.add(value.utcOffset(), "minutes"),
                       true
                       );

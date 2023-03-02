@@ -1,11 +1,13 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Dialog, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Button, Card, CardActions, CardContent, CardMedia, Dialog, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import EventService from "../../../Services/EventService";
+import { EventModel } from "../../../types/models/Event.model";
 import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
 
 const EventCard = (props: EventRecommendation) => {
   const [openLearnMoreDialog, setOpenLearnMoreDialog] = useState(false);
+  const [event, setEvent] = useState<EventModel>();
 
-// check if user is owner and disable participation btn 
   const handleClickOpenLearnMore = () => {
     setOpenLearnMoreDialog(true);
   };
@@ -14,12 +16,20 @@ const EventCard = (props: EventRecommendation) => {
     setOpenLearnMoreDialog(false);
   };
 
+  useEffect(() => {
+    return () => {
+      EventService.getEvent(props.eventId).then((res) => {
+        setEvent(res);
+      })
+    }
+  }, [props.eventId])
+  
   return (
     <>
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="Event image"
         height="140"
         image={props.imageUrl}
       />
@@ -42,16 +52,26 @@ const EventCard = (props: EventRecommendation) => {
         <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
-          alt="green iguana"
+          alt="Event image"
           height="140"
-          image="/images/OrganizeEvent.png"
+          image={props.imageUrl}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Eventname
+            {event?.eventName}
+          </Typography>
+          <br/>
+          <Typography variant="body2" color="text.secondary">
+            What: {event?.description}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Something
+            Where: {event?.location}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            When : {event?.startDate.toString()}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Until: {event?.endDate.toString()}
           </Typography>
         </CardContent>
         <CardActions>

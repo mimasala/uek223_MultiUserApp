@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './App.css';
 import Footer from './components/molecules/Footer/Footer';
 import NavBar from './components/molecules/NavBar/NavBar';
