@@ -10,6 +10,7 @@ import EventService from "../../../Services/EventService";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ParticipationService from "../../../Services/ParticipationService";
 import { User } from "../../../types/models/User.model";
+import { date, number, object, string } from "yup";
 
 const EditEventCard = (event: EventModel) => {
   const [openEditEventDialog, setOpenEditEventDialog] = useState(false);
@@ -42,6 +43,35 @@ const EditEventCard = (event: EventModel) => {
       });
     }
   }, [])
+
+  const eventValidationSchema = object().shape({
+    eventName: string()
+      .required("Name is required")
+      .min(3, "eventNameSizeValidation")
+      .max(50, "eventNameSizeValidation"),   
+      startDate: date()
+      .typeError("dateRequiredValidation")
+      .when("startDate", (startDate, schema) => {
+        return startDate && moment(startDate).isValid()
+          ? schema.min(moment(startDate), "Give another date")
+          : schema.min(moment().startOf("days"), "Give another date");
+      }),
+      endDate: date()
+      .typeError("dateRequiredValidation")
+      .when("endDate", (endDate, schema) => {
+        return endDate && moment(endDate).isValid()
+          ? schema.min(moment(endDate), "Give another date")
+          : schema.min(moment().startOf("days"), "Give another date");
+      }),
+      location: string()
+      .required("Location is required")
+      .min(3, "Location should be at least 3 characters long")
+      .max(30, "Location can max be 30 characters long"),   
+      description: string()
+      .required("Description is required")
+      .min(3, "Description should be at least 3 characters long")
+      .max(200, "Description can max be 200 characters long"),   
+  });
   
 
   const formik = useFormik<EventModel>({
@@ -56,11 +86,13 @@ const EditEventCard = (event: EventModel) => {
       eventOwner: event ? event.eventOwner : undefined,
       imageUrl: event ? event.imageUrl : "/images/OrganizeEvent.png",
     },
-    //validation
+    validationSchema: eventValidationSchema,
     onSubmit: (values: EventModel) => {
       submitActionHandler(values);
     },
     enableReinitialize: true,
+    validateOnChange: true,
+    validateOnBlur: true,
   });
 
   const handleClickOpenEditEvent = () => {
@@ -106,10 +138,10 @@ const EditEventCard = (event: EventModel) => {
               <Typography gutterBottom variant="h5" component="div">
                 Edit your event
               </Typography>
-              <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange}></TextField>
-              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange}></TextField>
-              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange}></TextField>
-              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange}></TextField>
+              <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange} ></TextField>
+              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange} error={Boolean(formik.errors.eventName && formik.touched.eventName)}></TextField>
+              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange} error={Boolean(formik.errors.location && formik.touched.location)}></TextField>
+              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange} error={Boolean(formik.errors.description && formik.touched.description)}></TextField>
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
@@ -144,6 +176,7 @@ const EditEventCard = (event: EventModel) => {
                               <TextField
                                 {...params}
                                 fullWidth
+                                error={Boolean(formik.errors.startDate && formik.touched.startDate)}
                                 required
                                 name="startDate"
                                 onBlur={formik.handleBlur}
@@ -170,6 +203,7 @@ const EditEventCard = (event: EventModel) => {
                                 {...params}
                                 fullWidth
                                 required
+                                error={Boolean(formik.errors.endDate && formik.touched.startDate)}
                                 name="endDate"
                                 onBlur={formik.handleBlur}
                               />

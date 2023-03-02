@@ -11,6 +11,7 @@ import EventService from "../../../Services/EventService";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import UserService from "../../../Services/UserService";
 import { User } from "../../../types/models/User.model";
+import { date, object, string } from "yup";
 
 const NewEventCard = () => {
   // formik validation 
@@ -55,6 +56,36 @@ const NewEventCard = () => {
       });
     }
   }, [])
+
+  
+  const eventValidationSchema = object().shape({
+    eventName: string()
+      .required("Name is required")
+      .min(3, "eventNameSizeValidation")
+      .max(50, "eventNameSizeValidation"),   
+      startDate: date()
+      .typeError("dateRequiredValidation")
+      .when("startDate", (startDate, schema) => {
+        return startDate && moment(startDate).isValid()
+          ? schema.min(moment(startDate), "Give another date")
+          : schema.min(moment().startOf("days"), "Give another date");
+      }),
+      endDate: date()
+      .typeError("dateRequiredValidation")
+      .when("endDate", (endDate, schema) => {
+        return endDate && moment(endDate).isValid()
+          ? schema.min(moment(endDate), "Give another date")
+          : schema.min(moment().startOf("days"), "Give another date");
+      }),
+      location: string()
+      .required("Location is required")
+      .min(3, "Location should be at least 3 characters long")
+      .max(30, "Location can max be 30 characters long"),   
+      description: string()
+      .required("Description is required")
+      .min(3, "Description should be at least 3 characters long")
+      .max(200, "Description can max be 200 characters long"),   
+  });
   
   const formik = useFormik({
     initialValues: {
@@ -68,7 +99,7 @@ const NewEventCard = () => {
       eventOwner: undefined,
       imageUrl: "",
     },
-    //validation
+    validationSchema: eventValidationSchema,
     onSubmit: (values: EventModel) => {
       submitActionHandler(values);
     },
@@ -107,9 +138,9 @@ const NewEventCard = () => {
               </Typography>
 
               <TextField name="imageUrl" label="Image url" type="text" value={formik.values.imageUrl} onChange={formik.handleChange}></TextField>
-              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange}></TextField>
-              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange}></TextField>
-              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange}></TextField>
+              <TextField name="eventName" label="Event name" type="text" value={formik.values.eventName} onChange={formik.handleChange} error={Boolean(formik.errors.eventName && formik.touched.eventName)}></TextField>
+              <TextField name="location" label="Location" type="text" value={formik.values.location} onChange={formik.handleChange} error={Boolean(formik.errors.location && formik.touched.location)}></TextField>
+              <TextField name="description" label="Description" type="text" value={formik.values.description} onChange={formik.handleChange} error={Boolean(formik.errors.description && formik.touched.description)}></TextField>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Startdate"
@@ -143,6 +174,7 @@ const NewEventCard = () => {
                     <TextField
                       {...params}
                       fullWidth
+                      error={Boolean(formik.errors.startDate && formik.touched.endDate)}
                       required
                       name="startDate"
                       onBlur={formik.handleBlur}
@@ -169,6 +201,7 @@ const NewEventCard = () => {
                       {...params}
                       fullWidth
                       required
+                      error={Boolean(formik.errors.endDate && formik.touched.endDate)}
                       name="endDate"
                       onBlur={formik.handleBlur}
                   />
