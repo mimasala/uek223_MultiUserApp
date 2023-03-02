@@ -5,7 +5,7 @@ const password = "1234"
 
 describe('empty spec', () => {
   beforeEach(() => {
-    cy.loginAsAdmin(email, password)
+    cy.login(email, password)
   })
   it("should logged in as admin", () => {
     cy.visit('http://localhost:3000/admin')

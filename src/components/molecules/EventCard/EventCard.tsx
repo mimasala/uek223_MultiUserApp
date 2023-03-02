@@ -29,7 +29,7 @@ const EventCard = (props: EventRecommendation) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleClickOpenLearnMore}>Learn more</Button>
+        <Button id="learnMoreButton" size="small" onClick={handleClickOpenLearnMore}>Learn more</Button>
       </CardActions>
     </Card>
     <div>
@@ -55,7 +55,7 @@ const EventCard = (props: EventRecommendation) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Participate</Button>
+          <Button id="participateButton" size="small">Participate</Button>
         </CardActions>
       </Card>
       </Dialog>

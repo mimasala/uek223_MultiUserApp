@@ -31,10 +31,10 @@ const EventPage = () => {
             <h1 >Available Events</h1>
             <Container maxWidth="md" >
               <Grid container spacing={10} sx={{ marginTop:"10%", marginBottom: "20%"}}>
-                {events.map((event: EventRecommendation) => {
+                {events.map((event: EventRecommendation, key) => {
                     return(
                       <Grid item xs={6}>
-                      <EventCard {...event}/>
+                      <EventCard {...event} key={key}/>
                       </Grid>
                     ); 
                   })}
