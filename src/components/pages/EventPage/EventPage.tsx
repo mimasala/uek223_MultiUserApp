@@ -3,7 +3,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";
 import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
-import EventCard from "../../molecules/EventCard/EventCard";
+import EventCard from "../../organisms/EventCard/EventCard";
 
 const EventPage = () => {
     const [page, setPage] = useState(2);
@@ -45,9 +45,9 @@ const EventPage = () => {
                     ); 
                   })}
                   <Grid item xs={12} >
-                    {events.at(0) && (<Stack spacing={2} sx={{alignItems:"center"}}>
+                    <Stack spacing={2} sx={{alignItems:"center"}}>
                       <Pagination count={count} page={page} onChange={handleChange} />
-                    </Stack>)}
+                    </Stack>
                   </Grid>
                 </Grid>
             </Container>

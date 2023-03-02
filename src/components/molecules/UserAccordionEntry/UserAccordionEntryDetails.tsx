@@ -47,6 +47,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                         marginRight: "10px",
                         borderRight: "2px gray solid"
                     }}>
+
                         <Stack spacing={1} direction="column">
                             <Paper sx={{
                                 padding: "10px",

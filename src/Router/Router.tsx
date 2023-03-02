@@ -31,13 +31,14 @@ const Router = () => {
         path={"/users"}
         element={<PrivateRoute authorities={[]} element={<UserTable />} />}
       />
+      // TODO: private route
       <Route
         path={"/events"}
-        element={<EventPage />} 
+        element={<PrivateRoute authorities={[]} element={<EventPage />} />}
       />
       <Route
         path={"/ownevents"}
-        element={<OwnEventsPage />} 
+        element={<PrivateRoute authorities={[]} element={<OwnEventsPage />} />}
       />
       <Route
         path="/useredit"
@@ -85,7 +86,6 @@ const Router = () => {
           <ProfilePage />}></PrivateRoute>
         }
       />
-
       <Route path="*" element={<NotFoundPage/>} />
     </Routes>
   );

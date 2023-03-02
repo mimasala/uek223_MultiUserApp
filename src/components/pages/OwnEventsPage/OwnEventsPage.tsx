@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";
 import { EventModel } from "../../../types/models/Event.model";
-import EditEventCard from "../../molecules/EventCard/EditEventCard";
-import NewEventCard from "../../molecules/EventCard/NewEventCard";
+import EditEventCard from "../../organisms/EventCard/EditEventCard";
+import NewEventCard from "../../organisms/EventCard/NewEventCard";
 import { useStyles } from "./OwnEvent.style";
 
 const OwnEventsPage = () => {

@@ -17,7 +17,8 @@ const EventService = {
       return res.data;
     });
   },
-  getRecommendationsForUser:(userId: String, page: number, pageLength: number ) => {
+
+  getRecommendationsForUser:(userId: string, page: number, pageLength: number ) => {
     return api.get(`/recommendation/${userId}`, { params: { page, pageLength}}).then((res) => {
       return res.data;
     });
@@ -30,15 +31,17 @@ const EventService = {
   deleteEvent: (id: string) => {
     return api.delete(`/event/${id}`);
   },
+
   getOwnEvents: async (user_id: string): Promise<EventModel[]> => {
     return api.get(`/event`, {params: {user_id} }).then((res) => {
       return res.data;
     });
   },
+
   getNumberOfEventPages: async (pageLength: number): Promise<number> => {
     const { data } = await api.get<number>(`/event/pageCount/${pageLength}`);
     return data;
-  },
+  }
 };
 
 export default EventService;

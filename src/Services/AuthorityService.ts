@@ -14,10 +14,12 @@ const AuthorityService = {
       });
     });
   },
+  
   hasAuthority: (authority: Authority) => {
     AuthorityService.initAuthoritySet();
     return authoritySet.has(authority.name);
   },
+
   hasAuthorities: (authorities: Authority[]) => {
     AuthorityService.initAuthoritySet();
     for (const element of authorities) {
@@ -27,6 +29,7 @@ const AuthorityService = {
     }
     return true;
   },
+
   hasAnyAuthority: (authorities: Authority[]) => {
     for (const element of authorities) {
       if (authoritySet.has(element)) {
@@ -35,9 +38,10 @@ const AuthorityService = {
     }
     return false;
   },
+
   clearAuthorities: (): void => {
     authoritySet.clear();
-  },
+  }
 };
 
 export default AuthorityService;

@@ -16,7 +16,6 @@ import ParticipationService from "../../../Services/ParticipationService";
 import { object, string } from "yup";
 
 const NewEventCard = () => {
-  // formik validation 
   const [openAddPeople, setOpenAddPeople] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
@@ -131,7 +130,7 @@ const NewEventCard = () => {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
-      >
+      > //same as edit
         <form onSubmit={formik.handleSubmit}>
           <Card sx={{ maxWidth: 345 }}>
             <CardMedia
@@ -139,10 +138,10 @@ const NewEventCard = () => {
               alt="organize events"
               height="140"
               image="/images/OrganizeEvent.png"
-            />       
+            />       //same as edit
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Create an event
+                Create an event // DIFF
               </Typography>
               <TextField name="imageUrl" 
               label="Image url"
@@ -244,31 +243,13 @@ const NewEventCard = () => {
               
             </CardContent>
             <CardActions>
-              <MuiButton type="submit" variant="contained">Save</MuiButton>
+              <MuiButton type="submit" variant="contained">Save</MuiButton> // DIFF
             </CardActions>
           </Card>
         </form>
       </Dialog>
 
-    <Dialog onClose={handleCloseUser} open={openAddPeople}>
-      <DialogTitle>Add event participants</DialogTitle>
-      <List sx={{ pt: 0 }}>
-        {users.map((user) => (
-          <ListItem disableGutters sx={{
-             backgroundColor: (addedUsers.indexOf(user, 0) === -1 ? "#FFF" : "#DDD")
-          }}>
-            <ListItemButton onClick={() => handleListItemClick(user)} key={user.id}>
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={user.email} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Button onClick={handleSubmitAddUsers} variant="contained">Submit</Button>
-    </Dialog>
+
     </>
   );
 };
