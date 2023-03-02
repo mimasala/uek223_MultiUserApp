@@ -7,7 +7,7 @@ this is the frontend for our Multi user app
 1. `git clone https://github.com/mimasala/uek223_MultiUserApp_backend.git`
 2. `cd uek223_MultiUserApp_backend`
 3. `yarn install`
-4. `yarn start
+4. `yarn start`
 
 -----
 
