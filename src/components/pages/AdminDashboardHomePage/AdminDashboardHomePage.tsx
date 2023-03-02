@@ -1,9 +1,5 @@
-import { Box, Container, Grid, Link, Pagination, Stack } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import ActiveUserContext from "../../../Contexts/ActiveUserContext";
-import EventService from "../../../Services/EventService";
-import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
-import EventCard from "../../molecules/EventCard/EventCard";
+import { Box, Container, Link, } from "@mui/material";
+
 
 const AdminDashboardHomePage = () => {
 

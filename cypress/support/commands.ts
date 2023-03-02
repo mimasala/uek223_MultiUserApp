@@ -35,7 +35,7 @@
 //     }
 //   }
 // }
-Cypress.Commands.add('loginAsAdmin', (email, password) => {
+Cypress.Commands.add('login', (email, password) => {
     cy.visit('http://localhost:3000/login');
     cy.get('input[id=email]').type(email);
     cy.get('input[id=password]').type(password);
@@ -45,7 +45,7 @@ Cypress.Commands.add('loginAsAdmin', (email, password) => {
 declare global {
     namespace Cypress {
         interface Chainable {
-            loginAsAdmin(email: string, password: string): Chainable<void>;
+            login(email: string, password: string): Chainable<void>;
         }
     }
 }
