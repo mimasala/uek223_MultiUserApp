@@ -13,6 +13,7 @@ const AdminDashboardHomePage = () => {
             <h1>Admin Dashboard</h1>
             <Container maxWidth="md" >
               <Link href="/admin/users">Users</Link>
+              <br/>
               <Link href="/admin/events">Events</Link>
             </Container>
         </Box>

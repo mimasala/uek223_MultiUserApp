@@ -38,7 +38,7 @@ const NavBar = () => {
   // if time basic profile page
   const settings: Page[] = [{ pageName: 'Profile', onClick: () => { return navigate("/profile") } }, { pageName: 'Own Events', onClick: () => { return navigate("/ownevents") } }, { pageName: 'Logout', onClick: () => { return context.logout() } }];
   const adminPages: Page[] = [
-    { pageName: "manage events", onClick: () => { return navigate("/events/manage") } },
+    { pageName: "MANAGE", onClick: () => { return navigate("/admin/events") } },
   ]
   useEffect(() => {
     if (context.user){
@@ -144,6 +144,14 @@ const NavBar = () => {
                 {page.pageName}
               </Button>
             ))}
+            {isAdmin &&
+              adminPages.map((page) => (
+                <MenuItem key={page.pageName} onClick={page.onClick}>
+                  <Typography textAlign={"center"}>
+                    {page.pageName}
+                  </Typography>
+                </MenuItem>
+              ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
