@@ -1,8 +1,7 @@
 # uk223 Skeleton
 
 ## Description
-This is the backend for the MultiUserApp. It is a RESTful API that is used to store and retrieve data from a database.
-In this Repository, we will implement the Event Entity for the Project.
+this is the frontend for our Multi user app
 
 ## installation
 1. `git clone https://github.com/mimasala/uek223_MultiUserApp_backend.git`
