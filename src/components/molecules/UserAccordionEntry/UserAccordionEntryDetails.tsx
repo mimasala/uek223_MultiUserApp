@@ -101,9 +101,9 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
           {"Edit " + user.firstName}
         </DialogTitle>
         <DialogContent>
-          <UserForm user={user} 
-            cancelActionHandler={() => setOpenEditUser(false)}
-            submitActionHandler={handleSubmitEditUser} isAllowedEditRoles={true}/>
+          <UserForm user={user}
+                    cancelActionHandler={() => setOpenEditUser(false)}
+                    submitActionHandler={handleSubmitEditUser} isAllowedEditRoles={true} showPasswordField={false}/>
         </DialogContent>
         <DialogActions>
         </DialogActions>
