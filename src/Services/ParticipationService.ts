@@ -9,7 +9,7 @@ const ParticipationService = {
     return data;
   },
   signManyUserUpForEvent: async ( eventID: string, userIDs: string[]): Promise<EventModel> => {
-    const { data } = await api.get<EventModel>(`/eventUser/${eventID}`, { params: { userIDs } });
+    const { data } = await api.post<EventModel>(`/eventUser/${eventID}`, userIDs);
     return data;
   },
   getAllParticipantsInEvent: async ( eventID: string, page: number, pageLength: number): Promise<User[]> => {
