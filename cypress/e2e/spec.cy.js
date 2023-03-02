@@ -16,10 +16,4 @@ describe('empty spec', () => {
   it("should manage users", () => {
     cy.visit('http://localhost:3000/admin/users')
   })
-  it("should enroll users to events", () => {
-    cy.visit('http://localhost:3000/admin/users')
-    cy.wait(1000)
-    // cy.contains("James Bond").click()
-    // cy.wait(1000)
-  })
 })

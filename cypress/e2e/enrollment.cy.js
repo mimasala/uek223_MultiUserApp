@@ -9,7 +9,7 @@ describe('empty spec', () => {
     cy.get("#learnMoreButton").first().click()
     cy.wait(1000)
     cy.get("#participateButton").first().click()
-    cy.wait(10000)
+    cy.wait(5000)
   })
   it("admin cant enroll in event", () => {
     cy.login(adminEmail, adminPassword)
