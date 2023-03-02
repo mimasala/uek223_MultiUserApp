@@ -28,18 +28,16 @@ const AdminUserManagePage = () => {
     }
 
     return (
-      <div style= {{
-        marginLeft: "20px",
-        marginRight: "20px"
-      }}>
-        {
-          users.map((user, key) => {
-              return <UserAccordionEntry expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
-          })
-        }
-        <Fab color="primary" 
-        aria-label="add" 
-        style={{
+        <div style= {{
+            marginLeft: "20px",
+            marginRight: "20px"
+        }}>
+      {
+        users.map((user, key) => {
+            return <UserAccordionEntry key={key} expanded={expanded} setExpanded={setExpanded} pannelId={key} user={user} />
+        })
+      }
+        <Fab color="primary" aria-label="add" style={{
             position: "fixed", bottom: "75px", right: "10px"
         }} onClick={handleAddUser}>
             <AddIcon />
