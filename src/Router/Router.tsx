@@ -8,7 +8,6 @@ import EventPage from "../components/pages/EventPage/EventPage";
 import NotFoundPage from "../components/pages/NotFound/NotFoundPage";
 import OwnEventsPage from "../components/pages/OwnEventsPage/OwnEventsPage";
 import EventsManagePage from "../components/pages/EventsManage/EventsManagePage";
-import roles from "../config/Roles";
 import authorities from "../config/Authorities";
 import ProfilePage from "../components/pages/ProfilePage/ProfilePage";
 import AdminDashboardHomePage from "../components/pages/AdminDashboardHomePage/AdminDashboardHomePage";

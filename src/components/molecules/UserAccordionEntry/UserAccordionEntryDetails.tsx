@@ -56,7 +56,7 @@ const UserAccordionEntryDetails = ({ user }: PropType) => {
                                     interests.map((interest) => <Chip label={interest} />)
                                 }
                                 {
-                                    interests.length == 0 ?
+                                    interests.length === 0 ?
                                         <>
                                             <Chip label="Fun" />
                                             <Chip label="Food" />

@@ -9,7 +9,6 @@ const EventService = {
   },
 
   updateEvent: (event: EventModel) => {
-    console.log(event);
     return api.put(`/event/${event.id}`, event);
   },
 
@@ -35,6 +34,10 @@ const EventService = {
     return api.get(`/event`, {params: {user_id} }).then((res) => {
       return res.data;
     });
+  },
+  getNumberOfEventPages: async (pageLength: number): Promise<number> => {
+    const { data } = await api.get<number>(`/event/pageCount/${pageLength}`);
+    return data;
   },
 };
 

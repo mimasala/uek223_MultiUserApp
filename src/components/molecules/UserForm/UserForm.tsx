@@ -1,9 +1,8 @@
 import { useFormik } from 'formik';
 import { User } from '../../../types/models/User.model';
-import { Box, Button, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent, TextField, Theme, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Chip, MenuItem, OutlinedInput, Select, TextField, Theme, useTheme } from '@mui/material';
 import { object, string } from 'yup';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Role } from '../../../types/models/Role.model';
 import RoleService from '../../../Services/RoleService';
 
@@ -37,10 +36,9 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 }
 
 const UserForm = ({ user, submitActionHandler, cancelActionHandler, isAllowedEditRoles, showPasswordField }: UserProps) => {
-  const navigate = useNavigate();
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
-  const [roles, setRoles] = React.useState<Role[]>([]);
+  const [personName, setPersonName] = useState<string[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   
   React.useEffect(() => {
     RoleService.findAll().then(response => {
