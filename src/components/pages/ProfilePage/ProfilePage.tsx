@@ -26,9 +26,7 @@ const ProfilePage = () => {
     <div>
         <Box sx={{margin:"30px"}}>
             <Card
-            elevation={1}
-            sx={{
-            }}>
+            elevation={1}>
                 {!editing && <Box sx={{
                     margin:"20px"
                 }}>

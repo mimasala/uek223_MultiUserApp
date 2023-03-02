@@ -11,9 +11,7 @@ const EventCard = (props: EventRecommendation) => {
   const [event, setEvent] = useState<EventModel>();
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const context = useContext(ActiveUserContext)
-  if (context.user){
-    setIsAdmin(context.user!.roles.some(role => role.name === roles.ADMIN))
-  }
+
   const handleClickOpenLearnMore = () => {
     setOpenLearnMoreDialog(true);
   };
@@ -23,12 +21,15 @@ const EventCard = (props: EventRecommendation) => {
   };
 
   useEffect(() => {
+    if (context.user){
+      setIsAdmin(context.user!.roles.some(role => role.name === roles.ADMIN))
+    }
     return () => {
       EventService.getEvent(props.eventId).then((res) => {
         setEvent(res);
       })
     }
-  }, [props.eventId])
+  }, [])
   
   return (
     <>

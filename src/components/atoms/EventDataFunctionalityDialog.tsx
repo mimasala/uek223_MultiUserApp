@@ -3,7 +3,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useFormik } from "formik";
 import moment from "moment";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { object, string } from "yup";
 import ActiveUserContext from "../../Contexts/ActiveUserContext";
 import EventService from "../../Services/EventService";
@@ -17,7 +17,7 @@ interface EventDialogProps {
     isNewEvent: boolean;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    event: EventModel;
+    event?: EventModel;
   }
 const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: EventDialogProps) => {
     const context =  useContext(ActiveUserContext);
@@ -48,18 +48,31 @@ const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: Even
       };
     
       const handleDelete = () => {
-        if(event.id){
+        if(event?.id){
           EventService.deleteEvent(event.id);
         }
         setOpen(false);
       }  
     
       const handlePagination = (changeEvent: ChangeEvent<unknown>, value: number) => {
-        ParticipationService.getAllParticipantsInEvent(event.id, value-1, 3).then((res) => {
+        if(event?.id){
+            ParticipationService.getAllParticipantsInEvent(event.id, value-1, 3).then((res) => {
+                setParticipants(res);
+              });
+            setPage(value)
+        }
+      };
+      
+      useEffect(() => { 
+        return () => {
+        if(event?.id){
+          ParticipationService.getAllParticipantsInEvent(event.id, 0, 3).then((res) => {
+            console.log("part", res)
             setParticipants(res);
           });
-        setPage(value)
-      };
+        }
+        }
+      }, [])
 
       const eventValidationSchema = object().shape({
         eventName: string()
@@ -94,7 +107,6 @@ const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: Even
         onSubmit: (values: EventModel) => {
           submitActionHandler(values);
         },
-        enableReinitialize: true,
         validateOnChange: true,
         validateOnBlur: true,
       });
@@ -203,9 +215,9 @@ const EventDataFunctionalityDialog = ({ isNewEvent, open, setOpen, event }: Even
             </CardContent>
             <CardActions>
             {!isNewEvent && (
-                <>
-              <Button type="submit" variant="contained">Save changes</Button>
-              <Button onClick={() => handleDelete()}> <DeleteIcon /></Button>
+              <>
+                <Button type="submit" variant="contained">Save changes</Button>
+                <Button onClick={() => handleDelete()}> <DeleteIcon /></Button>
               </>
               )}
               {isNewEvent && (<> <Button type="submit" variant="contained">Save</Button></>)}

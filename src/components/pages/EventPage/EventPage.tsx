@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Pagination, Stack } from "@mui/material";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { positional } from "yargs";
 import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";
 import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
@@ -12,7 +13,7 @@ const EventPage = () => {
     const [events, setEvents] = useState<EventRecommendation[]>([]);
 
     const handleChange = (event: ChangeEvent<unknown>, value: number) => {
-        EventService.getRecommendationsForUser(context.user!.id, value-1, 2).then((res) => {
+        EventService.getRecommendationsForUser(context.user!.id, value-1, 4).then((res) => {
             setEvents(res);
           });
         setPage(value)
@@ -21,11 +22,11 @@ const EventPage = () => {
 
     useEffect(() => {
         return () => {
-          EventService.getNumberOfEventPages(2).then((res) => {
+          EventService.getNumberOfEventPages(4).then((res) => {
             console.log(res)
             setCount(res);
           })
-          EventService.getRecommendationsForUser(context.user!.id, 0, 2).then((res) => {
+          EventService.getRecommendationsForUser(context.user!.id, 0, 4).then((res) => {
             setEvents(res);
           });
         };
@@ -33,24 +34,22 @@ const EventPage = () => {
 
     return(
         <Container fixed >
-        <Box sx={{  height: '90vh', textAlign: 'center',  overflow: 'auto', marginBottom: "20%"}} >
+        <Box sx={{  height: '68vh', textAlign: 'center',  overflow: 'auto', marginBottom: "20%"}} >
             <h1 >Available Events</h1>
-            <Container maxWidth="md" >
+            <Container maxWidth="md" sx={{height:'50vh'}}>
               <Grid container spacing={10} sx={{ marginTop:"10%", marginBottom: "20%"}}>
                 {events.map((event: EventRecommendation, key) => {
                     return(
                       <Grid item xs={6}>
-                      <EventCard {...event} key={key}/>
+                        <EventCard {...event} key={key}/>
                       </Grid>
                     ); 
                   })}
-                  <Grid item xs={12} >
-                    <Stack spacing={2} sx={{alignItems:"center"}}>
-                      <Pagination count={count} page={page} onChange={handleChange} />
-                    </Stack>
-                  </Grid>
                 </Grid>
             </Container>
+            <Stack spacing={2} sx={{alignItems:"center", marginBottom:"0"}}>
+                  <Pagination count={count} page={page} onChange={handleChange} />
+            </Stack>
         </Box>
       </Container>
       

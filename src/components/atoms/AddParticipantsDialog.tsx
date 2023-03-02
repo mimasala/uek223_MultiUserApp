@@ -40,7 +40,6 @@ const AddParticipantsDialog = ({ openAddPeople, setOpenAddPeople, createdEventId
         return () => {
           UserService.getAllUsers().then((data) => {
             setUsers(data.filter(user => {
-              console.log(user);
               if(user.roles.filter(role => role.name === "ADMIN").length > 0) {
                     return false;
                 }

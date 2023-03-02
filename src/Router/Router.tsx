@@ -26,12 +26,10 @@ const Router = () => {
     <Routes>
       <Route path={"/"} element={<HomePage />} />
       <Route path={"/login"} element={<LoginPage />} />
-
       <Route
         path={"/users"}
         element={<PrivateRoute authorities={[]} element={<UserTable />} />}
       />
-      // TODO: private route
       <Route
         path={"/events"}
         element={<PrivateRoute authorities={[]} element={<EventPage />} />}
