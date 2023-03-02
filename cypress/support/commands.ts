@@ -35,3 +35,17 @@
 //     }
 //   }
 // }
+Cypress.Commands.add('loginAsAdmin', (email, password) => {
+    cy.visit('http://localhost:3000/login');
+    cy.get('input[id=email]').type(email);
+    cy.get('input[id=password]').type(password);
+    cy.get('button[type=submit]').click();
+    cy.visit('http://localhost:3000/')
+});
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            loginAsAdmin(email: string, password: string): Chainable<void>;
+        }
+    }
+}

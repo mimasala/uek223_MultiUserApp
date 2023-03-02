@@ -38,7 +38,7 @@ const NavBar = () => {
   // if time basic profile page
   const settings: Page[] = [{ pageName: 'Profile', onClick: () => { return navigate("/profile") } }, { pageName: 'Own Events', onClick: () => { return navigate("/ownevents") } }, { pageName: 'Logout', onClick: () => { return context.logout() } }];
   const adminPages: Page[] = [
-    { pageName: "MANAGE", onClick: () => { return navigate("/admin/events") } },
+    { pageName: "MANAGE", onClick: () => { return navigate("/admin") } },
   ]
   useEffect(() => {
     if (context.user){
@@ -99,7 +99,7 @@ const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.pageName} onClick={page.onClick}>
+                <MenuItem data-cy="hello" key={page.pageName} onClick={page.onClick}>
                   <Typography textAlign={"center"}>
                     {page.pageName}
                   </Typography>
@@ -107,12 +107,18 @@ const NavBar = () => {
               ))}
               {isAdmin &&
                 adminPages.map((page) => (
-                  <MenuItem key={page.pageName} onClick={page.onClick}>
+                  <MenuItem id={page.pageName} key={page.pageName} onClick={page.onClick}>
                     <Typography textAlign={"center"}>
                       {page.pageName}
                     </Typography>
                   </MenuItem>
-                ))}
+                ))
+                }
+                <MenuItem id="test" key="test">
+                  <Typography textAlign={"center"}>
+                    {"test"}
+                  </Typography>
+                </MenuItem>
             </Menu>
           </Box>
           <InterestsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
