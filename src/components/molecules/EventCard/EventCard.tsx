@@ -1,5 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Dialog, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import roles from "../../../config/Roles";
+import ActiveUserContext from "../../../Contexts/ActiveUserContext";
 import EventService from "../../../Services/EventService";
 import { EventModel } from "../../../types/models/Event.model";
 import { EventRecommendation } from "../../../types/models/EventRecommendation.model";
@@ -7,7 +9,11 @@ import { EventRecommendation } from "../../../types/models/EventRecommendation.m
 const EventCard = (props: EventRecommendation) => {
   const [openLearnMoreDialog, setOpenLearnMoreDialog] = useState(false);
   const [event, setEvent] = useState<EventModel>();
-
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  const context = useContext(ActiveUserContext)
+  if (context.user){
+    setIsAdmin(context.user!.roles.some(role => role.name === roles.ADMIN))
+  }
   const handleClickOpenLearnMore = () => {
     setOpenLearnMoreDialog(true);
   };
@@ -74,9 +80,9 @@ const EventCard = (props: EventRecommendation) => {
             Until: {event?.endDate.toString()}
           </Typography>
         </CardContent>
-        <CardActions>
+        {!isAdmin&&<CardActions>
           <Button id="participateButton" size="small">Participate</Button>
-        </CardActions>
+        </CardActions>}
       </Card>
       </Dialog>
     </div>
