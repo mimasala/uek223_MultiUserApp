@@ -1,9 +1,6 @@
 name: Hello World Pipeline
 
-on:
-  push:
-    branches:
-      - "main"
+on: [push]
 
 jobs:
   say-hello:
