@@ -1,0 +1,17 @@
+name: Hello World Pipeline
+
+on: [push]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "Hello, world!"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build image
+        run: docker build -t mimasala/uek223-extended:latest .
+      - name: push image
+        run: docker push mimasala/uek223-extended:latest
